@@ -5,17 +5,20 @@
         <el-button type="primary" icon="el-icon-search" size="mini"
           >查询</el-button
         >
-        <el-button type="primary" icon="el-icon-plus" size="mini"
-          >新增</el-button
-        >
-        <el-button type="primary" icon="el-icon-download" size="mini"
-          >导入</el-button
-        >
+        <el-button type="default" size="mini">重置</el-button>
       </template>
     </SearchForm>
     <div class="app-container__body">
       <div class="app-container__body-table">
         <CustomTable :columns="columns" :tableData="tableData">
+          <template slot="header">
+            <el-button type="primary" icon="el-icon-plus" size="mini"
+              >新增</el-button
+            >
+            <el-button type="primary" icon="el-icon-download" size="mini"
+              >导入</el-button
+            >
+          </template>
           <template slot="handle" slot-scope="slotProps">
             <el-button
               icon="el-icon-edit"

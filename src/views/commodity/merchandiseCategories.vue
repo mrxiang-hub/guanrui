@@ -5,8 +5,8 @@
         <el-button type="primary" icon="el-icon-search" size="mini"
           >查询</el-button
         >
-        <el-button type="primary" icon="el-icon-plus" size="mini"
-          >新增</el-button
+          <el-button size="mini"
+          >重置</el-button
         >
       </template>
     </SearchForm>
@@ -20,6 +20,11 @@
       </div>
       <div class="app-container__body-table">
         <CustomTable :columns="columns" :tableData="tableData">
+          <template slot="header">
+            <el-button type="primary" icon="el-icon-plus" size="mini"
+              >新增</el-button
+            >
+          </template>
           <template slot="handle" slot-scope="slotProps">
             <el-button
               icon="el-icon-edit"
@@ -178,37 +183,37 @@ export default {
           initValue: undefined,
           placeholder: "供应商编码/名称/联系人",
           clearable: true,
-        }
+        },
       ],
       treeData: [
         {
-          label: "男装"
+          label: "男装",
         },
         {
-          label: '女装'
+          label: "女装",
         },
         {
-          label: '鞋子'
+          label: "鞋子",
         },
         {
-          label: '童装',
+          label: "童装",
           children: [
             {
-              label: '男童'
-            }
-          ]
+              label: "男童",
+            },
+          ],
         },
         {
-          label: '裤子'
-        }
+          label: "裤子",
+        },
       ],
       defaultProps: {
-        children: 'children',
-        label: 'label',
-        disabled: 'disabled',
-        isLeaf: 'isLeaf'
-      }
-    }
+        children: "children",
+        label: "label",
+        disabled: "disabled",
+        isLeaf: "isLeaf",
+      },
+    };
   },
 
   methods: {
@@ -272,6 +277,9 @@ export default {
         }
       });
       this.formData = obj;
+    },
+    handleNodeClick(data) {
+      console.log(data);
     },
   },
 };

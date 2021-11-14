@@ -5,6 +5,7 @@
         <el-button type="primary" icon="el-icon-search" size="mini"
           >查询</el-button
         >
+        <el-button size="mini">重置</el-button>
       </template>
     </SearchForm>
     <div class="app-container__body">
@@ -352,6 +353,9 @@ export default {
 
   .table-pagination {
     margin-top: 30px;
+  }
+  ::v-deep .page-custom-table__header {
+    display: none !important;
   }
   &__body {
     height: calc(100% - 200px);

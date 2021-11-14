@@ -98,9 +98,11 @@ export default {
 <style lang="scss" scoped>
 .search-form-box {
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
-
+.el-form-item {
+  margin-bottom: 0;
+}
 .btn-box {
   display: inline-block;
   margin-left: 10px;
