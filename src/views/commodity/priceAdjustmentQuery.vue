@@ -7,24 +7,28 @@
         >
       </template>
     </SearchForm>
-    <CustomTable :columns="columns" :tableData="tableData">
-      <template slot="handle" slot-scope="slotProps">
-        <el-button
-          icon="el-icon-search"
-          class="handle-table-btn"
-          type="default"
-          @click="handleEdit(slotProps.row)"
-          >查看
-        </el-button>
-        <el-button
-          icon="el-icon-delete-solid"
-          class="handle-table-btn"
-          type="danger"
-          @click="handleDelete(slotProps.row)"
-          >删除
-        </el-button>
-      </template>
-    </CustomTable>
+    <div class="app-container__body">
+      <div class="app-container__body-table">
+        <CustomTable :columns="columns" :tableData="tableData">
+          <template slot="handle" slot-scope="slotProps">
+            <el-button
+              icon="el-icon-search"
+              class="handle-table-btn"
+              type="default"
+              @click="handleEdit(slotProps.row)"
+              >查看
+            </el-button>
+            <el-button
+              icon="el-icon-delete-solid"
+              class="handle-table-btn"
+              type="danger"
+              @click="handleDelete(slotProps.row)"
+              >删除
+            </el-button>
+          </template>
+        </CustomTable>
+      </div>
+    </div>
     <el-pagination
       class="table-pagination"
       @size-change="handleSizeChange"
@@ -77,63 +81,60 @@ export default {
           prop: "mobile",
           label: "商品类别",
           width: "",
-
         },
-          {
+        {
           prop: "mobile",
           label: "品牌",
           width: "",
-     
         },
-          {
+        {
           prop: "mobile",
           label: "调价门店",
           width: "",
-     
         },
-          {
+        {
           prop: "mobile",
           label: "原进价",
           width: "",
           sortable: true,
         },
-         {
+        {
           prop: "mobile",
           label: "现进价",
           width: "",
           sortable: true,
         },
-         {
+        {
           prop: "mobile",
           label: "原售价",
           width: "",
           sortable: true,
         },
-         {
+        {
           prop: "mobile",
           label: "现售价",
           width: "",
           sortable: true,
         },
-         {
+        {
           prop: "mobile",
           label: "现会员价",
           width: "",
           sortable: true,
         },
-          {
+        {
           prop: "mobile",
           label: "生效时间",
           width: "",
           sortable: true,
         },
-          {
+        {
           prop: "mobile",
           label: "原会员价",
           width: "",
           sortable: true,
         },
-         {
+        {
           prop: "mobile",
           label: "单据编号",
           width: "",
@@ -270,7 +271,7 @@ export default {
           placeholder: "选择结束日期",
           clearable: true,
           type: "date",
-        }
+        },
       ],
     };
   },
@@ -351,6 +352,12 @@ export default {
 
   .table-pagination {
     margin-top: 30px;
+  }
+  &__body {
+    height: calc(100% - 200px);
+  }
+  &__body-table {
+    height: 100%;
   }
 }
 </style>
