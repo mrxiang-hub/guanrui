@@ -204,8 +204,28 @@ export default {
           clearable: true,
           type: "date",
         },
-      ],
-    };
+        {
+          label: "单据状态",
+          prop: "status",
+          element: "el-radio-group",
+          initValue: 3,
+          radios: [
+            {
+              label: "待审核",
+              value: 1
+            },
+            {
+              label: "已审核",
+              value: 2
+            },
+            {
+              label: "全部",
+              value: 3
+            }
+          ]
+        }
+      ]
+    }
   },
 
   methods: {
