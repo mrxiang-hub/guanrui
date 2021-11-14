@@ -43,7 +43,7 @@ export default {
 
 <style lang="scss" scoped>
   .page-custom-table {
-    height: calc(100% - 200px);
+    height: 100%;
     &__val {
       overflow: hidden;
       text-overflow: ellipsis;

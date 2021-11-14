@@ -10,24 +10,28 @@
         >
       </template>
     </SearchForm>
-    <CustomTable :columns="columns" :tableData="tableData">
-      <template slot="handle" slot-scope="slotProps">
-        <el-button
-          icon="el-icon-search"
-          class="handle-table-btn"
-          type="default"
-          @click="handleEdit(slotProps.row)"
-          >查看
-        </el-button>
-        <el-button
-          icon="el-icon-delete-solid"
-          class="handle-table-btn"
-          type="danger"
-          @click="handleDelete(slotProps.row)"
-          >删除
-        </el-button>
-      </template>
-    </CustomTable>
+    <div class="app-container__body">
+      <div class="app-container__body-table">
+        <CustomTable :columns="columns" :tableData="tableData">
+          <template slot="handle" slot-scope="slotProps">
+            <el-button
+              icon="el-icon-search"
+              class="handle-table-btn"
+              type="default"
+              @click="handleEdit(slotProps.row)"
+              >查看
+            </el-button>
+            <el-button
+              icon="el-icon-delete-solid"
+              class="handle-table-btn"
+              type="danger"
+              @click="handleDelete(slotProps.row)"
+              >删除
+            </el-button>
+          </template>
+        </CustomTable>
+      </div>
+    </div>
     <el-pagination
       class="table-pagination"
       @size-change="handleSizeChange"
@@ -212,20 +216,20 @@ export default {
           radios: [
             {
               label: "待审核",
-              value: 1
+              value: 1,
             },
             {
               label: "已审核",
-              value: 2
+              value: 2,
             },
             {
               label: "全部",
-              value: 3
-            }
-          ]
-        }
-      ]
-    }
+              value: 3,
+            },
+          ],
+        },
+      ],
+    };
   },
 
   methods: {
@@ -304,6 +308,12 @@ export default {
 
   .table-pagination {
     margin-top: 30px;
+  }
+  &__body {
+    height: calc(100% - 200px);
+  }
+  &__body-table {
+    height: 100%;
   }
 }
 </style>
