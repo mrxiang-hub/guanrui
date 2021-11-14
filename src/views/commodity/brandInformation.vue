@@ -58,32 +58,32 @@ export default {
         {
           prop: 'name',
           label: '品牌名称',
-          width: '',
+          width: ''
         },
         {
           prop: 'concat',
           label: '创建人',
-          width: '',
+          width: ''
         },
         {
           prop: 'mobile',
           label: '修改人',
-          width: '',
+          width: ''
         },
         {
           prop: 'mode',
           label: '创建时间',
-          width: '',  
+          width: ''
         },
         {
           prop: 'province',
           label: '更新时间',
-          width: '',
+          width: ''
         },
         {
           prop: 'handle',
           label: '操作',
-          width: 180,
+          width: 180
         }
       ],
       tableData: [
