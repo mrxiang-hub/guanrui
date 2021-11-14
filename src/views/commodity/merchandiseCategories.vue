@@ -11,6 +11,13 @@
       </template>
     </SearchForm>
     <div class="app-container__body">
+      <div class="app-container__body-tree">
+        <el-tree
+          :data="treeData"
+          :props="defaultProps"
+          @node-click="handleNodeClick"
+        ></el-tree>
+      </div>
       <div class="app-container__body-table">
         <CustomTable :columns="columns" :tableData="tableData">
           <template slot="handle" slot-scope="slotProps">
@@ -171,9 +178,37 @@ export default {
           initValue: undefined,
           placeholder: "供应商编码/名称/联系人",
           clearable: true,
-        },
+        }
       ],
-    };
+      treeData: [
+        {
+          label: "男装"
+        },
+        {
+          label: '女装'
+        },
+        {
+          label: '鞋子'
+        },
+        {
+          label: '童装',
+          children: [
+            {
+              label: '男童'
+            }
+          ]
+        },
+        {
+          label: '裤子'
+        }
+      ],
+      defaultProps: {
+        children: 'children',
+        label: 'label',
+        disabled: 'disabled',
+        isLeaf: 'isLeaf'
+      }
+    }
   },
 
   methods: {
@@ -255,9 +290,21 @@ export default {
   }
   &__body {
     height: calc(100% - 200px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  &__body-tree {
+    width: 200px;
+    height: 100%;
+    border: 1px solid #e4e7ed;
+    border-radius: 8px;
+    margin-right: 20px;
   }
   &__body-table {
     height: 100%;
+    flex: 1;
   }
 }
 </style>
