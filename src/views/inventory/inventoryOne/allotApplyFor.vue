@@ -14,9 +14,8 @@
       <div class="app-container__body-table">
         <CustomTable :columns="columns" :table-data="tableData">
           <template slot="header">
-            <el-button type="primary" size="mini" icon="el-icon-printer">条码打印</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
             <el-button type="primary" size="mini" icon="el-icon-s-tools">列设置</el-button>
-            <el-button type="primary" size="mini" icon="el-icon-download">导出</el-button>
           </template>
           <template slot="handle" slot-scope="slotProps">
             <el-button
