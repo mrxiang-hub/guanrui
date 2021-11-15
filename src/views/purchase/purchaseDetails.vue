@@ -20,21 +20,6 @@
               size="mini"
             >导出</el-button>
           </template>
-          <template slot="handle" slot-scope="slotProps">
-            <el-button
-              icon="el-icon-search"
-              class="handle-table-btn"
-              @click="handleEdit(slotProps.row)"
-            >查看
-            </el-button>
-            <el-button
-              icon="el-icon-delete-solid"
-              class="handle-table-btn"
-              type="danger"
-              @click="handleDelete(slotProps.row)"
-            >删除
-            </el-button>
-          </template>
         </CustomTable>
       </div>
     </div>
