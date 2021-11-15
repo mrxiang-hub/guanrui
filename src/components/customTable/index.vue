@@ -1,7 +1,7 @@
 <template>
   <div class="page-custom-table">
     <div class="page-custom-table__header">
-      <slot name="header"></slot>
+      <slot name="header" />
     </div>
     <el-table
       class="page-custom-table__body"
@@ -17,21 +17,21 @@
         :label="item.label"
         :width="item.width"
         :sortable="item.sortable"
+        :fixed="item.fixed"
       >
         <template slot-scope="scope">
           <slot
+            v-if="item.prop === 'handle'"
             name="handle"
             :row="scope.row"
             :column="scope.column"
             :$index="scope.$index"
-            v-if="item.prop === 'handle'"
-          ></slot>
+          />
           <span
-            :title="scope.row[item.prop]"
             v-else
+            :title="scope.row[item.prop]"
             class="page-custom-table__val"
-            >{{ scope.row[item.prop] }}</span
-          >
+          >{{ scope.row[item.prop] }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -43,19 +43,19 @@ export default {
   props: {
     columns: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     tableData: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   data() {
     return {
-      row: {},
-    };
-  },
-};
+      row: {}
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
