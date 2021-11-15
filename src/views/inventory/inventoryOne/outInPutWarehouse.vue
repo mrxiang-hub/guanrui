@@ -13,18 +13,6 @@
     <div class="app-container__body">
       <div class="app-container__body-table">
         <CustomTable :columns="columns" :table-data="tableData">
-          <template slot="header">
-            <el-button
-              type="primary"
-              icon="el-icon-upload2"
-              size="mini"
-            >导出</el-button>
-            <el-button
-              type="primary"
-              icon="el-icon-s-tools"
-              size="mini"
-            >列设置</el-button>
-          </template>
           <template slot="handle" slot-scope="slotProps">
             <el-button
               icon="el-icon-search"
@@ -450,6 +438,9 @@ export default {
 
   .table-pagination {
     margin-top: 30px;
+  }
+  ::v-deep.page-custom-table__header {
+    display: none;
   }
   &__body {
     height: calc(100% - 200px);
