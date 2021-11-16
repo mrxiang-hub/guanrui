@@ -220,7 +220,7 @@ export const constantRoutes = [
         children: [
           {
             path: 'inventoryApplication',
-            component: () => import('@/views/inventory/check/inventoryApplication'),
+            component: () => import('@/views/inventory/check/inventoryApplication/index'),
             name: 'InventoryApplication',
             meta: { title: '盘点单申请' }
           },
