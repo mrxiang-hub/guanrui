@@ -1,7 +1,11 @@
 <template>
-  <div style="padding:30px;">
-    <el-alert :closable="false" title="menu 1">
-      <router-view />
-    </el-alert>
-  </div>
+    <div class="module-member-statement">
+        <router-view/>
+    </div>
 </template>
+<style lang="scss" scoped>
+.module-member-statement {
+    width: 100%;
+    height: 100%;
+}
+</style>
