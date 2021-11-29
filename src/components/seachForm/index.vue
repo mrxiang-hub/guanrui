@@ -1,6 +1,7 @@
 <template>
   <div class="search-form-box">
     <el-form
+      class="serch-form-box__body"
       :model="formData"
       ref="formRef"
       :inline="true"
@@ -9,13 +10,10 @@
         v-for="(item, index) in formOptions"
         :key="index"
         :prop="item.prop"
-        :label="item.label ? (item.label + '：') : ''"
+        :label="item.label ? item.label + '：' : ''"
         :rules="item.rules"
       >
-        <formItem
-          v-model="formData[item.prop]"
-          :itemOptions="item"
-        />
+        <formItem v-model="formData[item.prop]" :itemOptions="item" />
       </el-form-item>
       <!--      操作按钮-->
       <el-form-item>
@@ -28,7 +26,7 @@
 </template>
 
 <script>
-import formItem from '@/components/formItem'
+import formItem from "@/components/formItem";
 
 export default {
   props: {
@@ -55,50 +53,53 @@ export default {
       type: Array,
       required: true,
       default() {
-        return []
-      }
-    }
+        return [];
+      },
+    },
   },
 
   data() {
     return {
-      formData: {}
-    }
+      formData: {},
+    };
   },
   created() {
-    this.addInitValue()
+    this.addInitValue();
   },
 
   methods: {
     // 校验
     onValidate(callback) {
-      this.$refs.formRef.validate(valid => {
+      this.$refs.formRef.validate((valid) => {
         if (valid) {
-          callback()
+          callback();
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     // 添加初始值
     addInitValue() {
-      const obj = {}
-      this.formOptions.forEach(curr => {
+      const obj = {};
+      this.formOptions.forEach((curr) => {
         if (curr.initValue !== undefined) {
-          obj[curr.prop] = curr.initValue
+          obj[curr.prop] = curr.initValue;
         }
-      })
-      this.formData = obj
-    }
+      });
+      this.formData = obj;
+    },
   },
-  components: { formItem }
-}
+  components: { formItem },
+};
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/mixin.scss";
 .search-form-box {
-  display: flex;
   margin-bottom: 20px;
+  &__body {
+      @include grid-mode(4, 2, 0, 0);
+  }
 }
 .el-form-item {
   margin-bottom: 0;
