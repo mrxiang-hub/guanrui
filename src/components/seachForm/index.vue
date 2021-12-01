@@ -1,10 +1,12 @@
 <template>
   <div class="search-form-box">
     <el-form
-      class="serch-form-box__body"
+      class="search-form-box__body"
       :model="formData"
       ref="formRef"
       :inline="true"
+      label-position="right"
+      label-width="100px"
     >
       <el-form-item
         v-for="(item, index) in formOptions"
@@ -98,7 +100,7 @@ export default {
 .search-form-box {
   margin-bottom: 20px;
   &__body {
-      @include grid-mode(4, 2, 0, 0);
+    @include grid-mode(3, 0, 0);
   }
 }
 .el-form-item {
@@ -106,7 +108,7 @@ export default {
 }
 .btn-box {
   display: inline-block;
-  margin-left: 10px;
+  margin-left: 100px;
 }
 </style>
 

@@ -26,16 +26,13 @@
   width: 100%;
   height: 100%;
 }
-@mixin grid-mode($columns, $rows, $columnGap, $rowGap) {
+@mixin grid-mode($columns, $columnGap, $rowGap) {
   display: grid;
   @if($columns) {
     grid-template-columns: repeat($columns, 1fr);
   }
-  @if($rows) {
-    grid-template-rows: repeat($rows, 1fr);
-  }
   @if($columnGap) {
-    grid-row-gap: $columnGap;
+    grid-column-gap: $columnGap;
   }
   @if($rowGap) {
     grid-row-gap: $rowGap;
