@@ -14,12 +14,17 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
-                    <template #header>
+                    <div slot="header" class="app-container__table-header">
                         <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
-                    </template>
+                        <el-button type="primary" size="mini" icon="el-icon-plus">条码打印</el-button>
+                    </div>
                     <template #handle="slotProps">
-                        <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(slotProps.row)">编辑</el-button>
-                        <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(slotProps.row)">删除</el-button>
+                        <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(slotProps.row)">
+                            编辑
+                        </el-button>
+                        <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(slotProps.row)">
+                            删除
+                        </el-button>
                     </template>
                 </CustomTable>
             </div>
@@ -42,7 +47,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'mall',
     components: {
         SearchForm,
         CustomTable
@@ -52,37 +57,49 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '类别编号',
+                    label: '门店名称',
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '类别名称'
+                    label: '商品条码'
                 },
                 {
                     prop: 'concat',
-                    label: '会员折扣'
+                    label: '商品款号'
                 },
                 {
                     prop: 'mobile',
-                    label: '升级条件'
+                    label: '自编码'
                 },
                 {
                     prop: 'mode',
-                    label: '是否允许升级'
+                    label: '商品名称'
                 },
                 {
                     prop: 'province',
-                    label: '创建人'
+                    label: '商品类型'
                 },
                 {
                     prop: 'province',
-                    label: '修改人'
+                    label: '所需积分'
+                },
+                {
+                    prop: 'province',
+                    label: '进货价'
+                },
+                {
+                    prop: 'province',
+                    label: '审核状态'
+                },
+                {
+                    prop: 'province',
+                    label: '更新时间'
                 },
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 200
                 }
             ],
             tableData: [
@@ -168,8 +185,26 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '单号/会员姓名/卡号',
+                    placeholder: '商品条码/商品名称',
                     clearable: true
+                },
+                {
+                    label: '分类',
+                    prop: 'store',
+                    element: 'el-select',
+                    initValue: undefined,
+                    placeholder: '选择分类',
+                    clearable: true,
+                    options: [
+                        {
+                            label: '实物商品',
+                            value: '1'
+                        },
+                        {
+                            label: '优惠券',
+                            value: '2'
+                        }
+                    ]
                 }
             ]
         };
@@ -240,25 +275,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

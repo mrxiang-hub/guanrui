@@ -14,9 +14,9 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
-                    <template #header>
+                    <div slot="header" class="app-container__table-header">
                         <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
-                    </template>
+                    </div>
                     <template #handle="slotProps">
                         <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(slotProps.row)">编辑</el-button>
                         <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(slotProps.row)">删除</el-button>
@@ -42,7 +42,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'category',
     components: {
         SearchForm,
         CustomTable
@@ -52,36 +52,32 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '门店名称',
+                    label: '类别编号',
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '规则名称'
+                    label: '类别名称'
                 },
                 {
                     prop: 'concat',
-                    label: '充值金额（元）'
+                    label: '会员折扣'
                 },
                 {
                     prop: 'mobile',
-                    label: '赠送金额（元）'
+                    label: '升级条件'
                 },
                 {
                     prop: 'mode',
-                    label: '开始时间'
+                    label: '是否允许升级'
                 },
                 {
                     prop: 'province',
-                    label: '结束时间'
+                    label: '创建人'
                 },
                 {
                     prop: 'province',
-                    label: '状态'
-                },
-                {
-                    prop: 'province',
-                    label: '创建时间'
+                    label: '修改人'
                 },
                 {
                     prop: 'handle',
@@ -172,15 +168,7 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '规则名称/充值金额',
-                    clearable: true
-                },
-                {
-                    label: '门店',
-                    prop: 'store',
-                    element: 'el-select',
-                    initValue: undefined,
-                    placeholder: '请选择门店',
+                    placeholder: '单号/会员姓名/卡号',
                     clearable: true
                 }
             ]
@@ -252,25 +240,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

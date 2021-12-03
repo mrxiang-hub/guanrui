@@ -294,27 +294,27 @@ export const constantRoutes = [
                 redirect: '/member/rule/type',
                 children: [
                     {
-                        path: 'type',
-                        component: () => import('@/views/member/rule/type'),
-                        name: 'Type',
+                        path: 'category',
+                        component: () => import('@/views/member/rule/category'),
+                        name: 'Category',
                         meta: { title: '会员类别' }
                     },
                     {
-                        path: 'integral',
-                        component: () => import('@/views/member/rule/integral'),
-                        name: 'Integral',
+                        path: 'memberPoints',
+                        component: () => import('@/views/member/rule/memberPoints'),
+                        name: 'MemberPoints',
                         meta: { title: '会员积分' }
                     },
                     {
-                        path: 'recharge',
-                        component: () => import('@/views/member/rule/recharge'),
-                        name: 'Recharge',
+                        path: 'give',
+                        component: () => import('@/views/member/rule/give'),
+                        name: 'Give',
                         meta: { title: '充值赠送' }
                     },
                     {
-                        path: 'commodity',
-                        component: () => import('@/views/member/rule/commodity'),
-                        name: 'Commodity',
+                        path: 'mall',
+                        component: () => import('@/views/member/rule/mall'),
+                        name: 'Mall',
                         meta: { title: '积分商品' }
                     }
                 ]

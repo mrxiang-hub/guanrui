@@ -14,10 +14,9 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
-                    <template #header>
+                    <div slot="header" class="app-container__table-header">
                         <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
-                        <el-button type="primary" size="mini" icon="el-icon-plus">条码打印</el-button>
-                    </template>
+                    </div>
                     <template #handle="slotProps">
                         <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(slotProps.row)">
                             编辑
@@ -47,7 +46,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'give',
     components: {
         SearchForm,
         CustomTable
@@ -62,44 +61,36 @@ export default {
                 },
                 {
                     prop: 'name',
-                    label: '商品条码'
+                    label: '规则名称'
                 },
                 {
                     prop: 'concat',
-                    label: '商品款号'
+                    label: '充值金额（元）'
                 },
                 {
                     prop: 'mobile',
-                    label: '自编码'
+                    label: '赠送金额（元）'
                 },
                 {
                     prop: 'mode',
-                    label: '商品名称'
+                    label: '开始时间'
                 },
                 {
                     prop: 'province',
-                    label: '商品类型'
+                    label: '结束时间'
                 },
                 {
                     prop: 'province',
-                    label: '所需积分'
+                    label: '状态'
                 },
                 {
                     prop: 'province',
-                    label: '进货价'
-                },
-                {
-                    prop: 'province',
-                    label: '审核状态'
-                },
-                {
-                    prop: 'province',
-                    label: '更新时间'
+                    label: '创建时间'
                 },
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 200
+                    width: 180
                 }
             ],
             tableData: [
@@ -185,26 +176,16 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '商品条码/商品名称',
+                    placeholder: '规则名称/充值金额',
                     clearable: true
                 },
                 {
-                    label: '分类',
+                    label: '门店',
                     prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
-                    placeholder: '选择分类',
-                    clearable: true,
-                    options: [
-                        {
-                            label: '实物商品',
-                            value: '1'
-                        },
-                        {
-                            label: '优惠券',
-                            value: '2'
-                        }
-                    ]
+                    placeholder: '请选择门店',
+                    clearable: true
                 }
             ]
         };
@@ -275,25 +256,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

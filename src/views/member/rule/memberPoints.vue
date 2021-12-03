@@ -3,9 +3,9 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
-                    <template #header>
+                    <div slot="header" class="app-container__table-header">
                         <div class="tip">注：积分=抵扣一元需积分数，金额=积一分需消费金额</div>
-                    </template>
+                    </div>
                     <template #handle="slotProps">
                         <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(slotProps.row)">
                             编辑
@@ -31,7 +31,7 @@
 import CustomTable from '@/components/customTable';
 
 export default {
-    name: 'BrandInformation',
+    name: 'memberPoints',
     components: {
         CustomTable
     },
@@ -210,29 +210,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
-
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    .tip {
-        color: #F56C6C;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
+.tip {
+    color: #F56C6C;
+    font-size: 14px;
 }
 </style>
 
