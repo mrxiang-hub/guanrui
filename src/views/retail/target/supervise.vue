@@ -19,5 +19,6 @@ export default {
     top: 30%;
     left: 50%;
     transform: translate(-50%, -30%);
+    color: #C0C4CC;
 }
 </style>
