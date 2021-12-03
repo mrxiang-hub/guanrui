@@ -84,36 +84,36 @@ export const constantRoutes = [
             }
         ]
     },
-
+    // 采购订单
     {
         path: '/purchase',
         component: Layout,
-        redirect: '/purchase/purchaseOrder', //
-        name: 'Purchase', //
-        meta: { title: '采购管理', icon: 'form' }, //
+        redirect: '/purchase/purchaseOrder',
+        name: 'Purchase',
+        meta: { title: '采购管理', icon: 'form' },
         children: [
             {
-                path: 'purchaseOrder',
-                name: 'PurchaseOrder',
-                component: () => import('@/views/purchase/purchaseOrder'),
+                path: 'order',
+                name: 'Order',
+                component: () => import('@/views/purchase/order'),
                 meta: { title: '采购订单', icon: 'form' }
             },
             {
-                path: 'commodityPut',
-                name: 'CommodityPut',
-                component: () => import('@/views/purchase/commodityPut'),
+                path: 'putIn',
+                name: 'PutIn',
+                component: () => import('@/views/purchase/putIn'),
                 meta: { title: '商品入库', icon: 'tree' }
             },
             {
-                path: 'returnCargo',
-                name: 'ReturnCargo',
-                component: () => import('@/views/purchase/returnCargo'),
+                path: 'returns',
+                name: 'Returns',
+                component: () => import('@/views/purchase/returns'),
                 meta: { title: '退货出库', icon: 'tree' }
             },
             {
-                path: 'purchaseDetails',
-                name: 'PurchaseDetails',
-                component: () => import('@/views/purchase/purchaseDetails'),
+                path: 'details',
+                name: 'Details',
+                component: () => import('@/views/purchase/details'),
                 meta: { title: '采购明细', icon: 'tree' }
             },
             {
