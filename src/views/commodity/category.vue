@@ -291,6 +291,26 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.app-container {
+    &__body {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 
+    &__body-tree {
+        width: 200px;
+        height: 100%;
+        border: 1px solid #e4e7ed;
+        border-radius: 8px;
+        margin-right: 20px;
+    }
+
+    &__body-table {
+        height: 100%;
+        flex: 1;
+    }
+}
 </style>
 
