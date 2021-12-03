@@ -362,12 +362,12 @@ export const constantRoutes = [
                 component: () => import('@/views/retail/summary'),
                 meta: { title: '销售汇总', icon: 'tree' }
             },
-            // {
-            //     path: 'cashierWaterBill',
-            //     name: 'CashierWaterBill',
-            //     component: () => import('@/views/retail/inventoryOne/cashierWaterBill'),
-            //     meta: { title: '收银流水', icon: 'tree' }
-            // },
+            {
+                path: 'cashierFlow',
+                name: 'CashierFlow',
+                component: () => import('@/views/retail/cashierFlow'),
+                meta: { title: '收银流水', icon: 'tree' }
+            },
             // {
             //     path: 'shopStatement',
             //     name: 'ShopStatement',
