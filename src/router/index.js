@@ -117,15 +117,15 @@ export const constantRoutes = [
                 meta: { title: '采购明细', icon: 'tree' }
             },
             {
-                path: 'purchaseSummary',
-                name: 'PurchaseSummary',
-                component: () => import('@/views/purchase/purchaseSummary'),
+                path: 'summary',
+                name: 'Summary',
+                component: () => import('@/views/purchase/summary'),
                 meta: { title: '采购汇总', icon: 'tree' }
             },
             {
-                path: 'supplierSettlement',
-                name: 'SupplierSettlement',
-                component: () => import('@/views/purchase/supplierSettlement'),
+                path: 'settlement',
+                name: 'Settlement',
+                component: () => import('@/views/purchase/settlement'),
                 meta: { title: '供应商结算', icon: 'tree' }
             }
         ]
