@@ -254,34 +254,34 @@ export const constantRoutes = [
                 meta: { title: '会员对账', icon: 'tree' }
             },
             {
-                path: 'statement',
-                component: () => import('@/views/member/statement/index'),
-                name: 'Statement',
+                path: 'report',
+                component: () => import('@/views/member/report/index'),
+                name: 'Report',
                 meta: { title: '会员报表', icon: 'tree' },
                 redirect: '/member/statement/recharge',
                 children: [
                     {
                         path: 'recharge',
-                        component: () => import('@/views/member/statement/recharge'),
+                        component: () => import('@/views/member/report/recharge'),
                         name: 'Recharge',
                         meta: { title: '充值报表' }
                     },
                     {
                         path: 'consumption',
-                        component: () => import('@/views/member/statement/consumption'),
+                        component: () => import('@/views/member/report/consume'),
                         name: 'Consumption',
                         meta: { title: '消费报表' }
                     },
                     {
                         path: 'integral',
-                        component: () => import('@/views/member/statement/integral'),
+                        component: () => import('@/views/member/report/integral'),
                         name: 'Integral',
                         meta: { title: '积分明细' }
                     },
                     {
-                        path: 'conversion',
-                        component: () => import('@/views/member/statement/conversion'),
-                        name: 'Conversion',
+                        path: 'exchange',
+                        component: () => import('@/views/member/report/exchange'),
+                        name: 'Exchange',
                         meta: { title: '兑换明细' }
                     }
                 ]

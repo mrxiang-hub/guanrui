@@ -1,9 +1,8 @@
 <template>
     <div class="app-container">
         <el-tabs v-model="tabIndex" @tab-click="handleClick">
-            <el-tab-pane label="消费明细" name="detail"></el-tab-pane>
-            <el-tab-pane label="会员卡消费汇总" name="memberSummary"></el-tab-pane>
-            <el-tab-pane label="消费汇总" name="summary"></el-tab-pane>
+            <el-tab-pane label="充值明细" name="detail"></el-tab-pane>
+            <el-tab-pane label="重置汇总" name="summary"></el-tab-pane>
         </el-tabs>
         <SearchForm :form-options="formOptions">
             <template #handleBtn>
@@ -19,14 +18,14 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
-                    <template slot="header">
+                    <div slot="header" class="app-container__table-header">
                         <el-button
                             type="primary"
-                            icon="el-icon-download"
+                            icon="el-icon-upload2"
                             size="mini"
                         >导出
                         </el-button>
-                    </template>
+                    </div>
                 </CustomTable>
             </div>
         </div>
@@ -48,7 +47,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'recharge',
     components: {
         SearchForm,
         CustomTable
@@ -60,81 +59,48 @@ export default {
                 {
                     prop: 'code',
                     label: '单号',
-                    width: 180,
-                    sortable: true,
-                    fixed: 'left'
+                    width: '',
+                    sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '类型',
-                    width: 180
+                    label: '会员卡号',
+                    width: ''
                 },
                 {
                     prop: 'concat',
-                    label: '会员卡号',
-                    width: 180
+                    label: '姓名手机号',
+                    width: ''
                 },
                 {
                     prop: 'mobile',
-                    label: '姓名',
-                    width: 180
+                    label: '会员等级',
+                    width: ''
                 },
                 {
                     prop: 'mode',
-                    label: '手机号',
-                    width: 180
+                    label: '充值前金额（元）',
+                    width: ''
                 },
                 {
                     prop: 'province',
-                    label: '会员等级',
-                    width: 180
+                    label: '充值金额（元）',
+                    width: ''
                 },
                 {
                     prop: 'province',
-                    label: '原价（元）',
-                    width: 180
+                    label: '赠送金额（元）',
+                    width: ''
                 },
                 {
                     prop: 'province',
-                    label: '售价（元）',
-                    width: 180
+                    label: '余额（元）',
+                    width: ''
                 },
                 {
                     prop: 'province',
-                    label: '金额（元）',
-                    width: 180
-                },
-                {
-                    prop: 'province',
-                    label: '优惠金额（元）',
-                    width: 180
-                },
-                {
-                    prop: 'province',
-                    label: '商品款号',
-                    width: 180
-                },
-                {
-                    prop: 'province',
-                    label: '商品名称',
-                    width: 180
-                },
-                {
-                    prop: 'province',
-                    label: '数量',
-                    width: 180
-                },
-                {
-                    prop: 'province',
-                    label: '收银员',
-                    width: 180
-                },
-                {
-                    prop: 'province',
-                    label: '消费日期',
-                    width: 180,
-                    sortable: true,
-                    fixed: 'right'
+                    label: '充值时间',
+                    width: ''
                 }
             ],
             tableData: [
@@ -344,25 +310,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

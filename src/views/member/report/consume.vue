@@ -1,5 +1,10 @@
 <template>
     <div class="app-container">
+        <el-tabs v-model="tabIndex" @tab-click="handleClick">
+            <el-tab-pane label="消费明细" name="detail"></el-tab-pane>
+            <el-tab-pane label="会员卡消费汇总" name="memberSummary"></el-tab-pane>
+            <el-tab-pane label="消费汇总" name="summary"></el-tab-pane>
+        </el-tabs>
         <SearchForm :form-options="formOptions">
             <template #handleBtn>
                 <el-button
@@ -14,6 +19,14 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
+                    <div slot="header" class="app-container__table-header">
+                        <el-button
+                            type="primary"
+                            icon="el-icon-upload2"
+                            size="mini"
+                        >导出
+                        </el-button>
+                    </div>
                 </CustomTable>
             </div>
         </div>
@@ -35,54 +48,93 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'consume',
     components: {
         SearchForm,
         CustomTable
     },
     data() {
         return {
+            tabIndex: 'detail', // 当前选中tab标签
             columns: [
                 {
                     prop: 'code',
-                    label: '会员姓名',
-                    sortable: true
+                    label: '单号',
+                    width: 180,
+                    sortable: true,
+                    fixed: 'left'
                 },
                 {
                     prop: 'name',
-                    label: '商品条码'
+                    label: '类型',
+                    width: 180
                 },
                 {
                     prop: 'concat',
-                    label: '商品名称'
+                    label: '会员卡号',
+                    width: 180
                 },
                 {
                     prop: 'mobile',
-                    label: '单个积分'
+                    label: '姓名',
+                    width: 180
                 },
                 {
                     prop: 'mode',
-                    label: '兑换数量'
+                    label: '手机号',
+                    width: 180
                 },
                 {
                     prop: 'province',
-                    label: '小计'
+                    label: '会员等级',
+                    width: 180
                 },
                 {
                     prop: 'province',
-                    label: '订单编号'
+                    label: '原价（元）',
+                    width: 180
                 },
                 {
                     prop: 'province',
-                    label: '收银员'
+                    label: '售价（元）',
+                    width: 180
                 },
                 {
                     prop: 'province',
-                    label: '所属门店'
+                    label: '金额（元）',
+                    width: 180
                 },
                 {
                     prop: 'province',
-                    label: '兑换时间'
+                    label: '优惠金额（元）',
+                    width: 180
+                },
+                {
+                    prop: 'province',
+                    label: '商品款号',
+                    width: 180
+                },
+                {
+                    prop: 'province',
+                    label: '商品名称',
+                    width: 180
+                },
+                {
+                    prop: 'province',
+                    label: '数量',
+                    width: 180
+                },
+                {
+                    prop: 'province',
+                    label: '收银员',
+                    width: 180
+                },
+                {
+                    prop: 'province',
+                    label: '消费日期',
+                    width: 180,
+                    sortable: true,
+                    fixed: 'right'
                 }
             ],
             tableData: [
@@ -170,6 +222,64 @@ export default {
                     initValue: undefined,
                     placeholder: '单号/会员姓名/卡号',
                     clearable: true
+                },
+                {
+                    label: '门店',
+                    prop: 'store',
+                    element: 'el-select',
+                    initValue: undefined,
+                    placeholder: '请选择门店',
+                    clearable: true,
+                    options: [
+                        {
+                            label: '管锐技术测试总部',
+                            value: '1'
+                        },
+                        {
+                            label: '管锐技术测试分店',
+                            value: '2'
+                        }
+                    ]
+                },
+                {
+                    label: '会员等级',
+                    prop: 'level',
+                    element: 'el-select',
+                    initValue: undefined,
+                    placeholder: '请选择会员等级',
+                    clearable: true,
+                    options: [
+                        {
+                            label: '微会员',
+                            value: '1'
+                        },
+                        {
+                            label: '普通会员',
+                            value: '2'
+                        },
+                        {
+                            label: '白银会员',
+                            value: '3'
+                        }
+                    ]
+                },
+                {
+                    label: '开始日期',
+                    prop: 'startTime',
+                    element: 'el-date-picker',
+                    initValue: undefined,
+                    placeholder: '请选择开始日期',
+                    clearable: true,
+                    type: 'date'
+                },
+                {
+                    label: '结束日期',
+                    prop: 'endTime',
+                    element: 'el-date-picker',
+                    initValue: undefined,
+                    placeholder: '请选择结束日期',
+                    clearable: true,
+                    type: 'date'
                 }
             ]
         };
@@ -234,25 +344,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 
