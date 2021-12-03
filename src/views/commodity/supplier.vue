@@ -23,13 +23,13 @@
                         </el-button>
                         <el-button
                             type="primary"
-                            icon="el-icon-download"
+                            icon="el-icon-upload2"
                             size="mini"
                         >导入
                         </el-button>
                         <el-button
                             type="primary"
-                            icon="el-icon-upload2"
+                            icon="el-icon-download"
                             size="mini"
                         >导出
                         </el-button>

@@ -8,33 +8,19 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button size="mini">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data='tableData'>
-                    <div slot="header" class="app-container__table-header">
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="mini"
-                        >新增
-                        </el-button>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-upload2"
-                            size="mini"
-                        >导入
-                        </el-button>
-                    </div>
+                <CustomTable :columns="columns" :table-data="tableData">
                     <template slot="handle" slot-scope="slotProps">
                         <el-button
-                            icon="el-icon-edit"
+                            icon="el-icon-search"
                             class="handle-table-btn"
-                            type="primary"
+                            type="default"
                             @click="handleEdit(slotProps.row)"
-                        >编辑
+                        >查看
                         </el-button>
                         <el-button
                             icon="el-icon-delete-solid"
@@ -65,7 +51,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'brand',
+    name: 'modifyPrice',
     components: {
         SearchForm,
         CustomTable
@@ -75,39 +61,86 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '品牌编码',
+                    label: '商品款号',
                     width: '',
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '品牌名称',
+                    label: '商品名称',
                     width: ''
                 },
                 {
                     prop: 'concat',
-                    label: '创建人',
+                    label: '自编码',
                     width: ''
                 },
                 {
                     prop: 'mobile',
-                    label: '修改人',
+                    label: '供应商',
                     width: ''
                 },
                 {
-                    prop: 'mode',
-                    label: '创建时间',
+                    prop: 'mobile',
+                    label: '商品类别',
                     width: ''
                 },
                 {
-                    prop: 'province',
-                    label: '更新时间',
+                    prop: 'mobile',
+                    label: '品牌',
                     width: ''
                 },
                 {
-                    prop: 'handle',
-                    label: '操作',
-                    width: 180
+                    prop: 'mobile',
+                    label: '调价门店',
+                    width: ''
+                },
+                {
+                    prop: 'mobile',
+                    label: '原进价',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '现进价',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '原售价',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '现售价',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '现会员价',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '生效时间',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '原会员价',
+                    width: '',
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '单据编号',
+                    width: ''
                 }
             ],
             tableData: [
@@ -193,8 +226,54 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '供应商编码/名称/联系人',
+                    placeholder: '商品款号/自编码/单据编号',
                     clearable: true
+                },
+                {
+                    label: '调价门店',
+                    prop: 'store',
+                    element: 'el-select',
+                    initValue: '1',
+                    placeholder: '门店选择',
+                    clearable: true,
+                    options: [
+                        { label: '管瑞技术测试总部', value: '1' },
+                        { label: '管瑞技术测试分店', value: '2' }
+                    ]
+                },
+                {
+                    label: '供应商',
+                    prop: 'keyWord',
+                    element: 'el-input',
+                    initValue: undefined,
+                    placeholder: '请选择供应商',
+                    clearable: true
+                },
+                {
+                    label: '商品类别',
+                    prop: 'keyWord',
+                    element: 'el-input',
+                    initValue: undefined,
+                    placeholder: '请选择商品类别',
+                    clearable: true
+                },
+                {
+                    label: '开始日期',
+                    prop: 'startTime',
+                    element: 'el-date-picker',
+                    initValue: '',
+                    placeholder: '选择开始日期',
+                    clearable: true,
+                    type: 'date'
+                },
+                {
+                    label: '结束日期',
+                    prop: 'endTime',
+                    element: 'el-date-picker',
+                    initValue: '',
+                    placeholder: '选择结束日期',
+                    clearable: true,
+                    type: 'date'
                 }
             ]
         };

@@ -60,26 +60,26 @@ export const constantRoutes = [
             },
             {
                 path: 'size',
-                name: 'size',
+                name: 'Size',
                 component: () => import('@/views/commodity/size'),
                 meta: { title: '尺码信息', icon: 'tree' }
             },
             {
-                path: 'merchandiseFile',
-                name: 'MerchandiseFile',
-                component: () => import('@/views/commodity/merchandiseFile'),
+                path: 'doc',
+                name: 'Doc',
+                component: () => import('@/views/commodity/doc'),
                 meta: { title: '商品档案', icon: 'tree' }
             },
             {
-                path: 'purchasingPriceAdjust',
-                name: 'PurchasingPriceAdjust',
-                component: () => import('@/views/commodity/purchasingPriceAdjust'),
+                path: 'purchasePrice',
+                name: 'PurchasePrice',
+                component: () => import('@/views/commodity/purchasePrice'),
                 meta: { title: '进价调整', icon: 'tree' }
             },
             {
-                path: 'priceAdjustmentQuery',
-                name: 'PriceAdjustmentQuery',
-                component: () => import('@/views/commodity/priceAdjustmentQuery'),
+                path: 'modifyPrice',
+                name: 'ModifyPrice',
+                component: () => import('@/views/commodity/modifyPrice'),
                 meta: { title: '调价查询', icon: 'tree' }
             }
         ]

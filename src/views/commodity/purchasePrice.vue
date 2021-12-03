@@ -8,12 +8,12 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button size="mini">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data='tableData'>
+                <CustomTable :columns="columns" :table-data="tableData">
                     <div slot="header" class="app-container__table-header">
                         <el-button
                             type="primary"
@@ -21,20 +21,14 @@
                             size="mini"
                         >新增
                         </el-button>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-upload2"
-                            size="mini"
-                        >导入
-                        </el-button>
                     </div>
                     <template slot="handle" slot-scope="slotProps">
                         <el-button
-                            icon="el-icon-edit"
+                            icon="el-icon-search"
                             class="handle-table-btn"
-                            type="primary"
+                            type="default"
                             @click="handleEdit(slotProps.row)"
-                        >编辑
+                        >查看
                         </el-button>
                         <el-button
                             icon="el-icon-delete-solid"
@@ -65,7 +59,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'brand',
+    name: 'purchasePrice',
     components: {
         SearchForm,
         CustomTable
@@ -75,34 +69,30 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '品牌编码',
+                    label: '进价订单编号',
                     width: '',
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '品牌名称',
+                    label: '调价门店',
                     width: ''
                 },
                 {
                     prop: 'concat',
-                    label: '创建人',
+                    label: '单据状态爱',
                     width: ''
                 },
                 {
                     prop: 'mobile',
-                    label: '修改人',
+                    label: '制单人',
                     width: ''
                 },
                 {
-                    prop: 'mode',
+                    prop: 'mobile',
                     label: '创建时间',
-                    width: ''
-                },
-                {
-                    prop: 'province',
-                    label: '更新时间',
-                    width: ''
+                    width: '',
+                    sortable: true
                 },
                 {
                     prop: 'handle',
@@ -195,6 +185,56 @@ export default {
                     initValue: undefined,
                     placeholder: '供应商编码/名称/联系人',
                     clearable: true
+                },
+                {
+                    label: '门店',
+                    prop: 'store',
+                    element: 'el-select',
+                    initValue: '1',
+                    placeholder: '门店选择',
+                    clearable: true,
+                    options: [
+                        { label: '管瑞技术测试总部', value: '1' },
+                        { label: '管瑞技术测试分店', value: '2' }
+                    ]
+                },
+                {
+                    label: '开始日期',
+                    prop: 'startTime',
+                    element: 'el-date-picker',
+                    initValue: '',
+                    placeholder: '选择开始日期',
+                    clearable: true,
+                    type: 'date'
+                },
+                {
+                    label: '结束日期',
+                    prop: 'endTime',
+                    element: 'el-date-picker',
+                    initValue: '',
+                    placeholder: '选择结束日期',
+                    clearable: true,
+                    type: 'date'
+                },
+                {
+                    label: '单据状态',
+                    prop: 'status',
+                    element: 'el-radio-group',
+                    initValue: 3,
+                    radios: [
+                        {
+                            label: '待审核',
+                            value: 1
+                        },
+                        {
+                            label: '已审核',
+                            value: 2
+                        },
+                        {
+                            label: '全部',
+                            value: 3
+                        }
+                    ]
                 }
             ]
         };

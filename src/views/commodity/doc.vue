@@ -8,12 +8,12 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button size="mini">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data='tableData'>
+                <CustomTable :columns="columns" :table-data="tableData">
                     <div slot="header" class="app-container__table-header">
                         <el-button
                             type="primary"
@@ -23,9 +23,39 @@
                         </el-button>
                         <el-button
                             type="primary"
+                            icon="el-icon-refresh-left"
+                            size="mini"
+                        >一键同步
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-refresh-left"
+                            size="mini"
+                        >同步
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-printer"
+                            size="mini"
+                        >条码打印
+                        </el-button>
+                        <el-button
+                            type="primary"
                             icon="el-icon-upload2"
                             size="mini"
                         >导入
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-s-tools"
+                            size="mini"
+                        >列设置
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-download"
+                            size="mini"
+                        >导出
                         </el-button>
                     </div>
                     <template slot="handle" slot-scope="slotProps">
@@ -65,7 +95,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'brand',
+    name: 'Doc',
     components: {
         SearchForm,
         CustomTable
@@ -75,13 +105,13 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '品牌编码',
+                    label: '商品款号',
                     width: '',
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '品牌名称',
+                    label: '尺寸名称',
                     width: ''
                 },
                 {
@@ -95,14 +125,16 @@ export default {
                     width: ''
                 },
                 {
-                    prop: 'mode',
+                    prop: 'mobile',
                     label: '创建时间',
-                    width: ''
+                    width: '',
+                    sortable: true
                 },
                 {
-                    prop: 'province',
+                    prop: 'mobile',
                     label: '更新时间',
-                    width: ''
+                    width: '',
+                    sortable: true
                 },
                 {
                     prop: 'handle',

@@ -291,38 +291,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-
-    &__body-tree {
-        width: 200px;
-        height: 100%;
-        border: 1px solid #e4e7ed;
-        border-radius: 8px;
-        margin-right: 20px;
-    }
-
-    &__body-table {
-        height: 100%;
-        flex: 1;
-    }
-}
 </style>
 
