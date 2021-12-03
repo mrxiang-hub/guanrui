@@ -368,12 +368,12 @@ export const constantRoutes = [
                 component: () => import('@/views/retail/cashierFlow'),
                 meta: { title: '收银流水', icon: 'tree' }
             },
-            // {
-            //     path: 'shopStatement',
-            //     name: 'ShopStatement',
-            //     component: () => import('@/views/retail/inventoryOne/shopStatement'),
-            //     meta: { title: '营业员报表', icon: 'tree' }
-            // },
+            {
+                path: 'clerk',
+                name: 'Clerk',
+                component: () => import('@/views/retail/clerk'),
+                meta: { title: '营业员报表', icon: 'tree' }
+            },
             {
                 path: 'salesTarget',
                 component: () => import('@/views/retail/salesTarget/index'), // Parent router-view
