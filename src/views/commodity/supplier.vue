@@ -14,7 +14,7 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data="tableData">
-                    <template slot="header">
+                    <div slot="header" class="app-container__table-header">
                         <el-button
                             type="primary"
                             icon="el-icon-plus"
@@ -33,7 +33,7 @@
                             size="mini"
                         >导出
                         </el-button>
-                    </template>
+                    </div>
                     <template slot="handle" slot-scope="slotProps">
                         <el-button
                             icon="el-icon-edit"

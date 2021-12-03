@@ -1,8 +1,6 @@
 <template>
     <div class="c-custom-table">
-        <div class="c-custom-table__header">
-            <slot name="header"/>
-        </div>
+        <slot name="header"/>
         <el-table
             class="c-custom-table__body"
             height="100%"
@@ -65,13 +63,6 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-
-    &__header {
-        width: 100%;
-        border: 1px solid #ebeef5;
-        border-bottom: none;
-        padding: 10px;
-    }
 
     &__body {
         flex: 1;

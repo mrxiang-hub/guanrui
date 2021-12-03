@@ -76,11 +76,20 @@ div:focus {
     &__body-table {
         height: 100%;
     }
+
+    &__table-header {
+        width: 100%;
+        border: 1px solid #ebeef5;
+        border-bottom: none;
+        padding: 10px;
+    }
 }
+
 .handle-table-btn {
     padding: 5px;
     font-size: 12px;
 }
+
 .table-pagination {
     margin-top: 20px;
 }
