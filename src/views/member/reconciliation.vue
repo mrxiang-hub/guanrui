@@ -13,34 +13,7 @@
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data="tableData">
-                    <template #header>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="mini"
-                        >新增会员
-                        </el-button>
-                    </template>
-                    <template #handle="slotProps">
-                        <el-button
-                            class="handle-table-btn"
-                            type="primary"
-                            icon="el-icon-edit"
-                            size="mini"
-                            @click="handleEidt(slotProps.row)"
-                        >编辑
-                        </el-button>
-                        <el-button
-                            class="handle-table-btn"
-                            type="danger"
-                            icon="el-icon-delete"
-                            size="mini"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
-                </CustomTable>
+                <CustomTable :columns="columns" :table-data="tableData" />
             </div>
         </div>
         <el-pagination
@@ -61,7 +34,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'InventoryAdjustmentOrder',
+    name: 'Reconciliation',
     components: {
         SearchForm,
         CustomTable
@@ -71,90 +44,48 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '会员卡号',
-                    width: 180,
+                    label: '单号',
+
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '会员姓名',
-                    width: 180
+                    label: '类型'
+
                 },
                 {
                     prop: 'concat',
-                    label: '自编码',
-                    width: 180
+                    label: '自编码'
+
                 },
                 {
                     prop: 'mobile',
-                    label: '开卡门店',
-                    width: 180
+                    label: '操作门店'
+
                 },
                 {
                     prop: 'mobile',
-                    label: '会员等级',
-                    width: 180,
+                    label: '操作前金额',
+
                     sortable: true
                 },
                 {
                     prop: 'mobile',
-                    label: '电话',
-                    width: 180,
+                    label: '操作金额',
+
                     sortable: true
                 },
                 {
                     prop: 'mobile',
-                    label: '性别',
-                    width: 180,
+                    label: '余额',
+
                     sortable: true
                 },
                 {
                     prop: 'mobile',
-                    label: '生日',
-                    width: 180,
+                    label: '创建时间',
+
                     sortable: true
-                },
-                {
-                    prop: 'mobile',
-                    label: '消费总额',
-                    width: 180,
-                    sortable: true
-                },
-                {
-                    prop: 'mobile',
-                    label: '当前余额',
-                    width: 180,
-                    sortable: true
-                },
-                {
-                    prop: 'mobile',
-                    label: '当前积分',
-                    width: 180,
-                    sortable: true
-                },
-                {
-                    prop: 'mobile',
-                    label: '状态',
-                    width: 180,
-                    sortable: true
-                },
-                {
-                    prop: 'mobile',
-                    label: '创建人',
-                    width: 180,
-                    sortable: true
-                },
-                {
-                    prop: 'mobile',
-                    label: '修改人',
-                    width: 180,
-                    sortable: true
-                },
-                {
-                    prop: 'handle',
-                    label: '操作',
-                    width: 180,
-                    fixed: 'right'
                 }
             ],
             tableData: [
@@ -236,52 +167,55 @@ export default {
             },
             formOptions: [
                 {
-                    label: '关键词',
+                    label: '查询类型',
+                    prop: 'type',
+                    element: 'el-radio-group',
+                    initValue: '3',
+                    radios: [
+                        {
+                            label: '余额对账',
+                            value: '1'
+                        },
+                        {
+                            label: '积分对账',
+                            value: '2'
+                        },
+                        {
+                            label: '历史消费',
+                            value: '3'
+                        },
+                        {
+                            label: '购买统计',
+                            value: '4'
+                        }
+
+                    ]
+                },
+                {
+                    label: '选择会员',
                     prop: 'keyWords',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '会员姓名/手机号/会员卡号',
+                    placeholder: '请选择会员',
                     clearable: true
                 },
                 {
-                    label: '开卡门店',
-                    prop: 'store',
-                    element: 'el-select',
+                    label: '开始日期',
+                    prop: 'startTime',
+                    element: 'el-date-picker',
                     initValue: undefined,
-                    placeholder: '门店选择',
+                    placeholder: '请选择开始日期',
                     clearable: true,
-                    options: [
-                        {
-                            label: '管锐技术测试总部',
-                            value: '1'
-                        },
-                        {
-                            label: '管锐技术测试分店',
-                            value: '2'
-                        }
-                    ]
+                    type: 'date'
                 },
                 {
-                    label: '会员等级',
-                    prop: 'store',
-                    element: 'el-select',
+                    label: '结束日期',
+                    prop: 'endTime',
+                    element: 'el-date-picker',
                     initValue: undefined,
-                    placeholder: '请选择会员等级',
+                    placeholder: '请选择开始日期',
                     clearable: true,
-                    options: [
-                        {
-                            label: '微会员',
-                            value: '1'
-                        },
-                        {
-                            label: '普通会员',
-                            value: '2'
-                        },
-                        {
-                            label: '白银会员',
-                            value: '2'
-                        }
-                    ]
+                    type: 'date'
                 }
             ]
         };
@@ -353,28 +287,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    //   ::v-deep .page-custom-table__header{
-    //       display: none;
-    //   }
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

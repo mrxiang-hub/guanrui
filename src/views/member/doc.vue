@@ -8,21 +8,36 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button size="mini">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data='tableData'>
-                    <template #header>
-                        <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
-                    </template>
-                    <template #handle="slotProps">
-                        <el-button type="default" size="mini" icon="el-icon-search" @click="handleEdit(slotProps.row)">
-                            查看
+                <CustomTable :columns="columns" :table-data="tableData">
+                    <div slot="header" class="app-container__table-header">
+                        <el-button
+                            type="primary"
+                            icon="el-icon-plus"
+                            size="mini"
+                        >新增会员
                         </el-button>
-                        <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(slotProps.row)">
-                            删除
+                    </div>
+                    <template #handle="slotProps">
+                        <el-button
+                            class="handle-table-btn"
+                            type="primary"
+                            icon="el-icon-edit"
+                            size="mini"
+                            @click="handleEidt(slotProps.row)"
+                        >编辑
+                        </el-button>
+                        <el-button
+                            class="handle-table-btn"
+                            type="danger"
+                            icon="el-icon-delete"
+                            size="mini"
+                            @click="handleDelete(slotProps.row)"
+                        >删除
                         </el-button>
                     </template>
                 </CustomTable>
@@ -46,7 +61,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'doc',
     components: {
         SearchForm,
         CustomTable
@@ -56,49 +71,90 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '单号',
+                    label: '会员卡号',
+                    width: 180,
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '前缀符号'
+                    label: '会员姓名',
+                    width: 180
                 },
                 {
                     prop: 'concat',
-                    label: '卡段'
+                    label: '自编码',
+                    width: 180
                 },
                 {
                     prop: 'mobile',
-                    label: '数量'
+                    label: '开卡门店',
+                    width: 180
                 },
                 {
-                    prop: 'mode',
-                    label: '余额'
+                    prop: 'mobile',
+                    label: '会员等级',
+                    width: 180,
+                    sortable: true
                 },
                 {
-                    prop: 'province',
-                    label: '类别'
+                    prop: 'mobile',
+                    label: '电话',
+                    width: 180,
+                    sortable: true
                 },
                 {
-                    prop: 'province',
-                    label: '开卡门店'
+                    prop: 'mobile',
+                    label: '性别',
+                    width: 180,
+                    sortable: true
                 },
                 {
-                    prop: 'province',
-                    label: '创建时间'
+                    prop: 'mobile',
+                    label: '生日',
+                    width: 180,
+                    sortable: true
                 },
                 {
-                    prop: 'province',
-                    label: '创建人'
+                    prop: 'mobile',
+                    label: '消费总额',
+                    width: 180,
+                    sortable: true
                 },
                 {
-                    prop: 'province',
-                    label: '修改人'
+                    prop: 'mobile',
+                    label: '当前余额',
+                    width: 180,
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '当前积分',
+                    width: 180,
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '状态',
+                    width: 180,
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '创建人',
+                    width: 180,
+                    sortable: true
+                },
+                {
+                    prop: 'mobile',
+                    label: '修改人',
+                    width: 180,
+                    sortable: true
                 },
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 200
+                    width: 180,
+                    fixed: 'right'
                 }
             ],
             tableData: [
@@ -181,18 +237,18 @@ export default {
             formOptions: [
                 {
                     label: '关键词',
-                    prop: 'keyWord',
+                    prop: 'keyWords',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '商品条码/商品名称',
+                    placeholder: '会员姓名/手机号/会员卡号',
                     clearable: true
                 },
                 {
-                    label: '门店',
+                    label: '开卡门店',
                     prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
-                    placeholder: '选择分类',
+                    placeholder: '门店选择',
                     clearable: true,
                     options: [
                         {
@@ -206,11 +262,11 @@ export default {
                     ]
                 },
                 {
-                    label: '类别',
+                    label: '会员等级',
                     prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
-                    placeholder: '类别选择',
+                    placeholder: '请选择会员等级',
                     clearable: true,
                     options: [
                         {
@@ -219,11 +275,11 @@ export default {
                         },
                         {
                             label: '普通会员',
-                            value: '3'
+                            value: '2'
                         },
                         {
                             label: '白银会员',
-                            value: '3'
+                            value: '2'
                         }
                     ]
                 }
@@ -233,11 +289,18 @@ export default {
 
     methods: {
         /**
-         * 点击顶部tab导航栏
-         * @param e
+         * 编辑
+         * @param data
          */
-        handleClick(e) {
-
+        handleEdit(data) {
+            console.log(data, 11111);
+        },
+        /**
+         * 删除
+         * @param data
+         */
+        handleDelete(data) {
+            console.log(data, 222222);
         },
         /**
          * 分页控制每页多少条
@@ -250,12 +313,6 @@ export default {
          */
         handleCurrentChange() {
             console.log(2222);
-        },
-        handleDelete(data) {
-
-        },
-        handleEdit(data) {
-
         },
         // 校验
         onValidate(callback) {
@@ -296,25 +353,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

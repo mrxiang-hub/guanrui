@@ -14,6 +14,9 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data='tableData'>
+                    <div slot="header" class="app-container__table-header">
+                        <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
+                    </div>
                     <template #handle="slotProps">
                         <el-button type="default" size="mini" icon="el-icon-search" @click="handleEdit(slotProps.row)">
                             查看
@@ -43,7 +46,7 @@ import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 
 export default {
-    name: 'BrandInformation',
+    name: 'vipCard',
     components: {
         SearchForm,
         CustomTable
@@ -53,52 +56,49 @@ export default {
             columns: [
                 {
                     prop: 'code',
-                    label: '会员卡号',
+                    label: '单号',
                     sortable: true
                 },
                 {
                     prop: 'name',
-                    label: '姓名'
+                    label: '前缀符号'
                 },
                 {
                     prop: 'concat',
-                    label: '电话'
+                    label: '卡段'
                 },
                 {
                     prop: 'mobile',
-                    label: '会员等级'
+                    label: '数量'
                 },
                 {
                     prop: 'mode',
+                    label: '余额'
+                },
+                {
+                    prop: 'province',
+                    label: '类别'
+                },
+                {
+                    prop: 'province',
                     label: '开卡门店'
                 },
                 {
                     prop: 'province',
-                    label: '当前积分'
+                    label: '创建时间'
                 },
                 {
                     prop: 'province',
-                    label: '当前余额'
+                    label: '创建人'
                 },
                 {
                     prop: 'province',
-                    label: '订单总计'
+                    label: '修改人'
                 },
                 {
-                    prop: 'province',
-                    label: '订单单价'
-                },
-                {
-                    prop: 'province',
-                    label: '消费次数'
-                },
-                {
-                    prop: 'province',
-                    label: '最近消费日期'
-                },
-                {
-                    prop: 'province',
-                    label: '未消费天数'
+                    prop: 'handle',
+                    label: '操作',
+                    width: 200
                 }
             ],
             tableData: [
@@ -206,8 +206,8 @@ export default {
                     ]
                 },
                 {
-                    label: '会员类别',
-                    prop: 'type',
+                    label: '类别',
+                    prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '类别选择',
@@ -223,28 +223,6 @@ export default {
                         },
                         {
                             label: '白银会员',
-                            value: '3'
-                        }
-                    ]
-                },
-                {
-                    label: '客户性别',
-                    prop: 'sex',
-                    element: 'el-select',
-                    initValue: undefined,
-                    placeholder: '类别选择',
-                    clearable: true,
-                    options: [
-                        {
-                            label: '男',
-                            value: '1'
-                        },
-                        {
-                            label: '女',
-                            value: '2'
-                        },
-                        {
-                            label: '未知',
                             value: '3'
                         }
                     ]
@@ -318,25 +296,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.app-container {
-    height: 100%;
 
-    .handle-table-btn {
-        padding: 4px;
-        font-size: 12px;
-    }
-
-    .table-pagination {
-        margin-top: 30px;
-    }
-
-    &__body {
-        height: calc(100% - 200px);
-    }
-
-    &__body-table {
-        height: 100%;
-    }
-}
 </style>
 

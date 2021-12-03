@@ -224,33 +224,33 @@ export const constantRoutes = [
             }
         ]
     },
-
+    // 会员管理
     {
         path: '/member',
         component: Layout,
         redirect: '/member/generalize',
         name: 'Member',
         meta: {
-            title: 'Member会员管理',
+            title: '会员管理',
             icon: 'nested'
         },
         children: [
             {
                 path: 'generalize',
                 name: 'Generalize',
-                component: () => import('@/views/member/one/generalize'),
+                component: () => import('@/views/member/generalize'),
                 meta: { title: '会员概括', icon: 'tree' }
             },
             {
-                path: 'recordFile',
-                name: 'RecordFile',
-                component: () => import('@/views/member/one/recordFile'),
+                path: 'doc',
+                name: 'Doc',
+                component: () => import('@/views/member/doc'),
                 meta: { title: '会员档案', icon: 'tree' }
             },
             {
                 path: 'reconciliation',
                 name: 'Reconciliation',
-                component: () => import('@/views/member/one/reconciliation'),
+                component: () => import('@/views/member/reconciliation'),
                 meta: { title: '会员对账', icon: 'tree' }
             },
             {
@@ -320,15 +320,15 @@ export const constantRoutes = [
                 ]
             },
             {
-                path: 'administrationManagement',
-                name: 'AdministrationManagement',
-                component: () => import('@/views/member/one/administrationManagement'),
+                path: 'vipCard',
+                name: 'VipCard',
+                component: () => import('@/views/member/vipCard'),
                 meta: { title: '会员卡管理', icon: 'tree' }
             },
             {
                 path: 'rfm',
                 name: 'RFM',
-                component: () => import('@/views/member/one/rfm'),
+                component: () => import('@/views/member/rfm'),
                 meta: { title: '会员RFM', icon: 'tree' }
             }
         ]
