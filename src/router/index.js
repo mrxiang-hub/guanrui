@@ -375,15 +375,15 @@ export const constantRoutes = [
                 meta: { title: '营业员报表', icon: 'tree' }
             },
             {
-                path: 'salesTarget',
-                component: () => import('@/views/retail/salesTarget/index'), // Parent router-view
-                name: 'SalesTarget',
+                path: 'target',
+                component: () => import('@/views/retail/target/index'),
+                name: 'Target',
                 meta: { title: '销售目标' },
-                redirect: '/inventory/salesTarget/salesTargets',
+                redirect: '/retail/target/salesTarget',
                 children: [
                     {
-                        path: 'salesTargets',
-                        component: () => import('@/views/retail/salesTarget/salesTargets'),
+                        path: 'salesTarget',
+                        component: () => import('@/views/retail/target/salesTarget'),
                         name: 'SalesTarget',
                         meta: { title: '销售目标' }
                     },
