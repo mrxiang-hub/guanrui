@@ -188,40 +188,40 @@ export const constantRoutes = [
                 name: 'Warn',
                 component: () => import('@/views/stock/warn'),
                 meta: { title: '库存预警', icon: 'tree' }
+            },
+            {
+                path: 'business',
+                name: 'Business',
+                component: () => import('@/views/stock/business/index'),
+                meta: { title: '盘点业务', icon: 'tree' },
+                redirect: '/stock/business/inventoryApplication',
+                children: [
+                    {
+                        path: 'inventoryApplication',
+                        component: () => import('@/views/stock/business/apply'),
+                        name: 'Apply',
+                        meta: { title: '盘点单申请' }
+                    },
+                    {
+                        path: 'stocktaking',
+                        component: () => import('@/views/stock/business/stocktaking'),
+                        name: 'Stocktaking',
+                        meta: { title: '存货盘点' }
+                    },
+                    {
+                        path: 'different',
+                        component: () => import('@/views/stock/business/different'),
+                        name: 'Different',
+                        meta: { title: '差异处理' }
+                    },
+                    {
+                        path: 'handle',
+                        component: () => import('@/views/stock/business/handle'),
+                        name: 'Handle',
+                        meta: { title: '盘点差异报表' }
+                    }
+                ]
             }
-            // {
-            //     path: 'check',
-            //     component: () => import('@/views/inventory/check/index'), // Parent router-view
-            //     name: 'Check',
-            //     meta: { title: '盘点业务' },
-            //     redirect: '/inventory/check/inventoryApplication',
-            //     children: [
-            //         {
-            //             path: 'inventoryApplication',
-            //             component: () => import('@/views/inventory/check/inventoryApplication/index'),
-            //             name: 'InventoryApplication',
-            //             meta: { title: '盘点单申请' }
-            //         },
-            //         {
-            //             path: 'stocktaking',
-            //             component: () => import('@/views/inventory/check/stocktaking'),
-            //             name: 'Stocktaking',
-            //             meta: { title: '存货盘点' }
-            //         },
-            //         {
-            //             path: 'differences',
-            //             component: () => import('@/views/inventory/check/differences'),
-            //             name: 'Differences',
-            //             meta: { title: '差异处理' }
-            //         },
-            //         {
-            //             path: 'varianceReport',
-            //             component: () => import('@/views/inventory/check/varianceReport'),
-            //             name: 'VarianceReport',
-            //             meta: { title: '盘点差异报表' }
-            //         }
-            //     ]
-            // }
         ]
     },
 
