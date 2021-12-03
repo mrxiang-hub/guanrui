@@ -388,17 +388,17 @@ export const constantRoutes = [
                         meta: { title: '销售目标' }
                     },
                     {
-                        path: 'targetResults',
-                        component: () => import('@/views/retail/salesTarget/targetResults'),
-                        name: 'TargetResults',
+                        path: 'summary',
+                        component: () => import('@/views/retail/target/summary'),
+                        name: 'Summary',
                         meta: { title: '目标结果汇总' }
-                    },
-                    {
-                        path: 'supervision',
-                        component: () => import('@/views/retail/salesTarget/supervision'),
-                        name: 'Supervision',
-                        meta: { title: '执行监督' }
                     }
+                    // {
+                    //     path: 'supervision',
+                    //     component: () => import('@/views/retail/salesTarget/supervision'),
+                    //     name: 'Supervision',
+                    //     meta: { title: '执行监督' }
+                    // }
                 ]
             }
         ]
