@@ -333,7 +333,7 @@ export const constantRoutes = [
             }
         ]
     },
-
+    // 零售数据
     {
         path: '/retail',
         component: Layout,
@@ -345,35 +345,35 @@ export const constantRoutes = [
         },
         children: [
             {
-                path: 'sellWaterBill',
-                name: 'SellWaterBill',
-                component: () => import('@/views/retail/inventoryOne/sellWaterBill'),
+                path: 'flow',
+                name: 'Flow',
+                component: () => import('@/views/retail/flow'),
                 meta: { title: '销售流水', icon: 'tree' }
             },
             {
-                path: 'cashierCheck',
-                name: 'CashierCheck',
-                component: () => import('@/views/retail/inventoryOne/cashierCheck'),
+                path: 'cashier',
+                name: 'Cashier',
+                component: () => import('@/views/retail/cashier'),
                 meta: { title: '收银对账', icon: 'tree' }
             },
             {
-                path: 'sellCollect',
-                name: 'SellCollect',
-                component: () => import('@/views/retail/inventoryOne/sellCollect'),
+                path: 'summary',
+                name: 'Summary',
+                component: () => import('@/views/retail/summary'),
                 meta: { title: '销售汇总', icon: 'tree' }
             },
-            {
-                path: 'cashierWaterBill',
-                name: 'CashierWaterBill',
-                component: () => import('@/views/retail/inventoryOne/cashierWaterBill'),
-                meta: { title: '收银流水', icon: 'tree' }
-            },
-            {
-                path: 'shopStatement',
-                name: 'ShopStatement',
-                component: () => import('@/views/retail/inventoryOne/shopStatement'),
-                meta: { title: '营业员报表', icon: 'tree' }
-            },
+            // {
+            //     path: 'cashierWaterBill',
+            //     name: 'CashierWaterBill',
+            //     component: () => import('@/views/retail/inventoryOne/cashierWaterBill'),
+            //     meta: { title: '收银流水', icon: 'tree' }
+            // },
+            // {
+            //     path: 'shopStatement',
+            //     name: 'ShopStatement',
+            //     component: () => import('@/views/retail/inventoryOne/shopStatement'),
+            //     meta: { title: '营业员报表', icon: 'tree' }
+            // },
             {
                 path: 'salesTarget',
                 component: () => import('@/views/retail/salesTarget/index'), // Parent router-view
