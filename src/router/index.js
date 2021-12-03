@@ -378,7 +378,7 @@ export const constantRoutes = [
                 path: 'target',
                 component: () => import('@/views/retail/target/index'),
                 name: 'Target',
-                meta: { title: '销售目标' },
+                meta: { title: '销售目标', icon: 'tree' },
                 redirect: '/retail/target/salesTarget',
                 children: [
                     {
@@ -392,13 +392,13 @@ export const constantRoutes = [
                         component: () => import('@/views/retail/target/summary'),
                         name: 'Summary',
                         meta: { title: '目标结果汇总' }
+                    },
+                    {
+                        path: 'supervise',
+                        component: () => import('@/views/retail/target/supervise'),
+                        name: 'Supervision',
+                        meta: { title: '执行监督' }
                     }
-                    // {
-                    //     path: 'supervision',
-                    //     component: () => import('@/views/retail/salesTarget/supervision'),
-                    //     name: 'Supervision',
-                    //     meta: { title: '执行监督' }
-                    // }
                 ]
             }
         ]
