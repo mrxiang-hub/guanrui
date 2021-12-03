@@ -41,27 +41,27 @@ export const constantRoutes = [
                 meta: { title: '供应商管理', icon: 'tree' }
             },
             {
-                path: 'brandInformation',
-                name: 'BrandInformation',
-                component: () => import('@/views/commodity/brandInformation'),
+                path: 'brand',
+                name: 'Brand',
+                component: () => import('@/views/commodity/brand'),
                 meta: { title: '品牌信息', icon: 'tree' }
             },
             {
-                path: 'merchandiseCategories',
-                name: 'MerchandiseCategories',
-                component: () => import('@/views/commodity/merchandiseCategories'),
+                path: 'category',
+                name: 'Category',
+                component: () => import('@/views/commodity/category'),
                 meta: { title: '商品类别', icon: 'tree' }
             },
             {
-                path: 'colourInformation',
-                name: 'ColourInformation',
-                component: () => import('@/views/commodity/colourInformation'),
+                path: 'colour',
+                name: 'Colour',
+                component: () => import('@/views/commodity/colour'),
                 meta: { title: '颜色信息', icon: 'tree' }
             },
             {
-                path: 'sizeInformation',
-                name: 'SizeInformation',
-                component: () => import('@/views/commodity/sizeInformation'),
+                path: 'size',
+                name: 'size',
+                component: () => import('@/views/commodity/size'),
                 meta: { title: '尺码信息', icon: 'tree' }
             },
             {
