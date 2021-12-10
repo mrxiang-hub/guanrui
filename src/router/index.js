@@ -403,7 +403,7 @@ export const constantRoutes = [
             }
         ]
     },
-
+    // 决策分析
     {
         path: '/analyze',
         component: Layout,
@@ -412,9 +412,9 @@ export const constantRoutes = [
         meta: { title: '决策分析', icon: 'el-icon-s-help' },
         children: [
             {
-                path: 'supplierManagement',
-                name: 'SupplierManagement',
-                component: () => import('@/views/analyze/supplierManagement'),
+                path: 'sale',
+                name: 'Sale',
+                component: () => import('@/views/analyze/sale'),
                 meta: { title: '销售分析', icon: 'tree' }
             },
             {
