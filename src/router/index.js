@@ -418,9 +418,9 @@ export const constantRoutes = [
                 meta: { title: '销售分析', icon: 'tree' }
             },
             {
-                path: 'brandInformation',
-                name: 'BrandInformation',
-                component: () => import('@/views/analyze/brandInformation'),
+                path: 'profit',
+                name: 'Profit',
+                component: () => import('@/views/analyze/profit'),
                 meta: { title: '毛利分析', icon: 'tree' }
             },
             {
