@@ -430,9 +430,9 @@ export const constantRoutes = [
                 meta: { title: '库存分析', icon: 'tree' }
             },
             {
-                path: 'colourInformation',
-                name: 'ColourInformation',
-                component: () => import('@/views/analyze/colourInformation'),
+                path: 'purchase',
+                name: 'Purchase',
+                component: () => import('@/views/analyze/purchase'),
                 meta: { title: '采购分析', icon: 'tree' }
             },
             {
