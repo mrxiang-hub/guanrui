@@ -424,9 +424,9 @@ export const constantRoutes = [
                 meta: { title: '毛利分析', icon: 'tree' }
             },
             {
-                path: 'merchandiseCategories',
-                name: 'MerchandiseCategories',
-                component: () => import('@/views/analyze/merchandiseCategories'),
+                path: 'stock',
+                name: 'Stock',
+                component: () => import('@/views/analyze/stock'),
                 meta: { title: '库存分析', icon: 'tree' }
             },
             {
