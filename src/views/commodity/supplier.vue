@@ -63,10 +63,43 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
-        <CustomDialog>
-            <div style="width: 100px;height: 1000px;background: red">
-
-            </div>
+        <CustomDialog title="编辑供应商" :show="isShowDialog" @close="closeDialog">
+            <el-form :model="ruleForm" ref="ruleForm" label-position="left" label-width="100px" inline>
+                <el-form-item label="编号" :props="ruleForm.numbers">
+                    <el-input v-model="ruleForm.numbers"></el-input>
+                </el-form-item>
+                <el-form-item label="名称" :props="ruleForm.name">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="联系人" :props="ruleForm.contacts">
+                    <el-input v-model="ruleForm.contacts"></el-input>
+                </el-form-item>
+                <el-form-item label="联系电话" :props="ruleForm.mobile">
+                    <el-input v-model="ruleForm.mobile"></el-input>
+                </el-form-item>
+                <el-form-item label="经营方式" :props="ruleForm.mode">
+                    <el-input v-model="ruleForm.mode"></el-input>
+                </el-form-item>
+                <el-form-item label="业务员姓名" :props="ruleForm.salesman">
+                    <el-input v-model="ruleForm.salesman"></el-input>
+                </el-form-item>
+                <el-form-item label="业务员电话" :props="ruleForm.salesmanPhone">
+                    <el-input v-model="ruleForm.salesmanPhone"></el-input>
+                </el-form-item>
+                <el-form-item label="省份" :props="ruleForm.province">
+                    <el-input v-model="ruleForm.province"></el-input>
+                </el-form-item>
+                <el-form-item label="城市" :props="ruleForm.city">
+                    <el-input v-model="ruleForm.city"></el-input>
+                </el-form-item>
+                <el-form-item label="详细地址" :props="ruleForm.address">
+                    <el-input v-model="ruleForm.address"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button type="primary" size="mini">保存</el-button>
+                <el-button size="mini">取消</el-button>
+            </template>
         </CustomDialog>
     </div>
 </template>
@@ -367,7 +400,20 @@ export default {
                     placeholder: '供应商编码/名称/联系人',
                     clearable: true
                 }
-            ]
+            ],
+            ruleForm: {
+                numbers: '', // 编号
+                name: '', // 名称
+                contacts: '', // 联系人
+                mobile: '', // 联系电话
+                mode: '', // 经营方式
+                salesman: '', // 业务员姓名
+                salesmanPhone: '', // 业务员电话
+                province: '', // 省份
+                city: '', // 城市
+                address: '' // 详细地址
+            },
+            isShowDialog: false
         };
     },
 
@@ -377,7 +423,11 @@ export default {
          * @param data
          */
         handleEdit(data) {
+            this.isShowDialog = true;
             console.log(data, 11111);
+        },
+        closeDialog() {
+            this.isShowDialog = false;
         },
         /**
          * 删除

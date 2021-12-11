@@ -1,18 +1,21 @@
 <template>
     <div class="c-custom-dialog">
         <el-dialog
-            :visible.sync="dialogVisible"
+            :visible.sync="show"
             width="60%"
             :show-close="false"
-            :before-close="handleClose">
+            @close="handleClose"
+        >
             <div slot="title" class="c-custom-dialog__header">
-                <div class="c-custom-dialog__title">提示</div>
-                <span class="c-custom-dialog__close el-icon-close"></span>
+                <div class="c-custom-dialog__title">{{ title }}</div>
+                <span class="c-custom-dialog__close el-icon-close" @click="handleClose"></span>
             </div>
             <el-scrollbar class="c-custom-dialog__body">
                 <slot></slot>
             </el-scrollbar>
-            <slot name="footer"></slot>
+            <div class="c-custom-dialog__footer">
+                <slot name="footer"></slot>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -21,17 +24,21 @@
 export default {
     name: "custom-dialog",
     props: {
-        dialogVisible: {
+        show: {
             type: Boolean,
             default: () => true
-        }
+        },
+        title: {
+            type: String,
+            default: () => ''
+        },
     },
     data() {
         return {}
     },
     methods: {
         handleClose() {
-
+            this.$emit('close');
         }
     }
 }
@@ -53,13 +60,27 @@ export default {
     &__close {
         cursor: pointer;
     }
+
     &__body {
-        min-height: 400px;
-        max-height: 500px;
-        overflow: auto;
+        height: 60vh;
+        overflow-x: hidden;
+        padding: 40px 20px;
     }
+
+    &__footer {
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 -2px 12px 0 rgb(0 0 0 / 10%);
+    }
+
     ::v-deep .el-scrollbar__wrap {
         overflow: auto;
+        padding: 0 20px;
+    }
+
+    ::v-deep .el-dialog__body {
+        overflow: hidden;
+        padding: 0;
     }
 }
 </style>
