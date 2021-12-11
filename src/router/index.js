@@ -483,7 +483,28 @@ export const constantRoutes = [
                 name: "Role",
                 component: () => import('@/views/setting/role'),
                 meta: {title: '角色管理', icon: 'tree'}
-            }
+            },
+            {
+                path: 'other',
+                name: 'Other',
+                component: () => import('@/views/setting/other/index'),
+                meta: {title: '其他设置', icon: 'tree'},
+                redirect: '/setting/other/print',
+                children: [
+                    {
+                        path: 'print',
+                        name: 'Print',
+                        component: () => import('@/views/setting/other/print'),
+                        meta: {title: '打印设置'}
+                    },
+                    {
+                        path: 'rule',
+                        name: 'Rule',
+                        component: () => import('@/views/setting/other/rule'),
+                        meta: {title: '商品规则'}
+                    }
+                ]
+            },
         ]
     },
     // 404
