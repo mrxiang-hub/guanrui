@@ -505,6 +505,12 @@ export const constantRoutes = [
                     }
                 ]
             },
+            {
+                path: 'user',
+                name: "User",
+                component: () => import('@/views/setting/user'),
+                meta: {title: '用户管理', icon: 'tree'}
+            }
         ]
     },
     // 404
