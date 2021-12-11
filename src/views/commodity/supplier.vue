@@ -63,18 +63,25 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
+        <CustomDialog>
+            <div style="width: 100px;height: 1000px;background: red">
+
+            </div>
+        </CustomDialog>
     </div>
 </template>
 
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import CustomDialog from "@/components/custom-dialog";
 
 export default {
     name: 'supplier',
     components: {
         SearchForm,
-        CustomTable
+        CustomTable,
+        CustomDialog
     },
     data() {
         return {
