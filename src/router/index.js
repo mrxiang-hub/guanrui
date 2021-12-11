@@ -510,7 +510,22 @@ export const constantRoutes = [
                 name: "User",
                 component: () => import('@/views/setting/user'),
                 meta: {title: '用户管理', icon: 'tree'}
-            }
+            },
+            {
+                path: 'software',
+                name: 'Software',
+                component: () => import('@/views/setting/software/index'),
+                meta: {title: '软件安装', icon: 'tree'},
+                redirect: '/setting/software/tools',
+                children: [
+                    {
+                        path: 'tools',
+                        name: 'Tools',
+                        component: () => import('@/views/setting/software/tools'),
+                        meta: {title: '安装工具'}
+                    }
+                ]
+            },
         ]
     },
     // 404
