@@ -526,6 +526,18 @@ export const constantRoutes = [
                     }
                 ]
             },
+            {
+                path: 'pos',
+                name: "Pos",
+                component: () => import('@/views/setting/pos'),
+                meta: {title: '¥pos机登记', icon: 'tree'}
+            },
+            {
+                path: 'check',
+                name: "Check",
+                component: () => import('@/views/setting/check'),
+                meta: {title: '审核人员', icon: 'tree'}
+            }
         ]
     },
     // 404
