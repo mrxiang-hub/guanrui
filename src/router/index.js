@@ -477,6 +477,12 @@ export const constantRoutes = [
                         meta: {title: '门店管理'}
                     }
                 ]
+            },
+            {
+                path: 'role',
+                name: "Role",
+                component: () => import('@/views/setting/role'),
+                meta: {title: '角色管理', icon: 'tree'}
             }
         ]
     },
