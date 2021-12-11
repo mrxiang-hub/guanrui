@@ -449,13 +449,34 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/setting/changePwd',
         name: 'Setting',
-        meta: {title: '决策分析', icon: 'el-icon-s-help'},
+        meta: {title: '系统设置', icon: 'el-icon-s-help'},
         children: [
             {
-                path:'changePwd',
+                path: 'changePwd',
                 name: 'ChangePwd',
                 component: () => import('@/views/setting/changePwd'),
                 meta: {title: '修改密码', icon: 'tree'}
+            },
+            {
+                path: 'enterprise',
+                name: 'Enterprise',
+                component: () => import('@/views/setting/enterprise/index'),
+                meta: {title: '企业管理', icon: 'tree'},
+                redirect: '/setting/enterprise/info',
+                children: [
+                    {
+                        path: 'info',
+                        name: 'Info',
+                        component: () => import('@/views/setting/enterprise/info'),
+                        meta: {title: '企业信息'}
+                    },
+                    {
+                        path: 'store',
+                        name: 'Store',
+                        component: () => import('@/views/setting/enterprise/store'),
+                        meta: {title: '门店管理'}
+                    }
+                ]
             }
         ]
     },
