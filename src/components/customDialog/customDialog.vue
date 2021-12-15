@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: "custom-dialog",
+    name: 'customDialog',
     props: {
         show: {
             type: Boolean,

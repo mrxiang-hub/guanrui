@@ -107,7 +107,7 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
-import CustomDialog from "@/components/custom-dialog";
+import CustomDialog from '@/components/customDialog/customDialog';
 
 export default {
     name: 'supplier',
