@@ -12,7 +12,11 @@ import App from './App';
 import store from './store';
 import router from './router';
 import * as echarts from 'echarts';
+import directives from './directives/index';
 Vue.prototype.$echarts = echarts;
+Object.keys(directives).forEach((key) => {
+    Vue.directive(key, directives[key]);
+});
 
 import '@/icons'; // icon
 import '@/permission'; // permission control

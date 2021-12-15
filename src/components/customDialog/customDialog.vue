@@ -6,7 +6,7 @@
             :show-close="false"
             @close="handleClose"
         >
-            <div slot="title" class="c-custom-dialog__header">
+            <div slot="title" class="c-custom-dialog__header" v-drag>
                 <div class="c-custom-dialog__title">{{ title }}</div>
                 <span class="c-custom-dialog__close el-icon-close" @click="handleClose"></span>
             </div>
