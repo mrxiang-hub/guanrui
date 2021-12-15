@@ -424,7 +424,6 @@ export default {
          */
         handleEdit(data) {
             this.isShowDialog = true;
-            console.log(data, 11111);
         },
         closeDialog() {
             this.isShowDialog = false;
@@ -434,19 +433,19 @@ export default {
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
+
         },
         // 校验
         onValidate(callback) {

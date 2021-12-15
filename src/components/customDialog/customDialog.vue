@@ -1,12 +1,13 @@
 <template>
     <div class="c-custom-dialog">
         <el-dialog
+            v-drag
             :visible.sync="show"
             width="60%"
             :show-close="false"
             @close="handleClose"
         >
-            <div slot="title" class="c-custom-dialog__header" v-drag>
+            <div slot="title" class="c-custom-dialog__header">
                 <div class="c-custom-dialog__title">{{ title }}</div>
                 <span class="c-custom-dialog__close el-icon-close" @click="handleClose"></span>
             </div>
