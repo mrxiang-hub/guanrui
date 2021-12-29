@@ -433,7 +433,22 @@ export default {
          * @param data
          */
         handleDelete(data) {
-
+            this.$confirm('确定要删除吗?', '删除', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         /**
          * 分页控制每页多少条
