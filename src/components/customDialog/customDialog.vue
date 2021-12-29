@@ -1,5 +1,5 @@
 <template>
-    <div class="c-custom-dialog" v-drag>
+    <div class="c-custom-dialog">
         <el-dialog
             :visible.sync="show"
             width="60%"
@@ -8,13 +8,13 @@
         >
             <div slot="title" class="c-custom-dialog__header">
                 <div class="c-custom-dialog__title">{{ title }}</div>
-                <span class="c-custom-dialog__close el-icon-close" @click="handleClose"></span>
+                <span class="c-custom-dialog__close el-icon-close" @click="handleClose" />
             </div>
             <el-scrollbar class="c-custom-dialog__body">
-                <slot></slot>
+                <slot />
             </el-scrollbar>
             <div class="c-custom-dialog__footer">
-                <slot name="footer"></slot>
+                <slot name="footer" />
             </div>
         </el-dialog>
     </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: 'customDialog',
+    name: 'CustomDialog',
     props: {
         show: {
             type: Boolean,
@@ -31,17 +31,17 @@ export default {
         title: {
             type: String,
             default: () => ''
-        },
+        }
     },
     data() {
-        return {}
+        return {};
     },
     methods: {
         handleClose() {
             this.$emit('close');
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
