@@ -1,6 +1,7 @@
 <template>
     <div class="c-custom-dialog">
         <el-dialog
+            v-drag
             :visible.sync="show"
             width="60%"
             :show-close="false"
