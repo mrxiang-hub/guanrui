@@ -19,18 +19,21 @@
                             type="primary"
                             icon="el-icon-plus"
                             size="mini"
+                            @click="handleAdd"
                         >新增
                         </el-button>
                         <el-button
                             type="primary"
                             icon="el-icon-upload2"
                             size="mini"
+                            @click="handleImport"
                         >导入
                         </el-button>
                         <el-button
                             type="primary"
                             icon="el-icon-download"
                             size="mini"
+                            @click="handleExport"
                         >导出
                         </el-button>
                     </div>
@@ -63,7 +66,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
-        <CustomDialog title="编辑供应商" :show="isShowDialog" @close="closeDialog">
+        <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
             <el-form :model="ruleForm" ref="ruleForm" label-position="left" label-width="100px" inline>
                 <el-form-item label="编号" :props="ruleForm.numbers">
                     <el-input v-model="ruleForm.numbers" placeholder="编号"></el-input>
@@ -413,16 +416,37 @@ export default {
                 city: '', // 城市
                 address: '' // 详细地址
             },
-            isShowDialog: false
+            isShowDialog: false, // 是否显示弹窗
+            dialogTitle: '新增供应商' // 弹窗标题
         };
     },
 
     methods: {
         /**
+         * 新增
+         */
+        handleAdd() {
+            this.dialogTitle = '新增供应商';
+            this.isShowDialog = true;
+        },
+        /**
+         * 导入
+         */
+        handleImport() {
+
+        },
+        /**
+         * 导出
+         */
+        handleExport() {
+
+        },
+        /**
          * 编辑
          * @param data
          */
         handleEdit(data) {
+            this.dialogTitle = '编辑供应商';
             this.isShowDialog = true;
         },
         closeDialog() {
