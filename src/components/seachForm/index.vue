@@ -1,37 +1,38 @@
 <template>
-  <div class="search-form-box">
-    <el-form
-      class="search-form-box__body"
-      :model="formData"
-      ref="formRef"
-      :inline="true"
-      label-position="right"
-      label-width="100px"
-    >
-      <el-form-item
-        v-for="(item, index) in formOptions"
-        :key="index"
-        :prop="item.prop"
-        :label="item.label ? item.label + '：' : ''"
-        :rules="item.rules"
-      >
-        <formItem v-model="formData[item.prop]" :itemOptions="item" />
-      </el-form-item>
-      <!--      操作按钮-->
-      <el-form-item>
-        <div class="btn-box">
-          <slot name="handleBtn"></slot>
-        </div>
-      </el-form-item>
-    </el-form>
-  </div>
+    <div class="search-form-box">
+        <el-form
+            ref="formRef"
+            class="search-form-box__body"
+            :model="formData"
+            :inline="true"
+            label-position="right"
+            label-width="100px"
+        >
+            <el-form-item
+                v-for="(item, index) in formOptions"
+                :key="index"
+                :prop="item.prop"
+                :label="item.label ? item.label + '：' : ''"
+                :rules="item.rules"
+            >
+                <formItem v-model="formData[item.prop]" :item-options="item" />
+            </el-form-item>
+            <!--      操作按钮-->
+            <el-form-item>
+                <div class="btn-box">
+                    <slot name="handleBtn" />
+                </div>
+            </el-form-item>
+        </el-form>
+    </div>
 </template>
 
 <script>
-import formItem from "@/components/formItem";
+import formItem from '@/components/formItem';
 
 export default {
-  props: {
+    components: { formItem },
+    props: {
     /**
      * 表单配置
      * 示例：
@@ -51,47 +52,46 @@ export default {
      *   ...... // 可添加任意elementui组件支持的属性
      * }]
      */
-    formOptions: {
-      type: Array,
-      required: true,
-      default() {
-        return [];
-      },
+        formOptions: {
+            type: Array,
+            required: true,
+            default() {
+                return [];
+            }
+        }
     },
-  },
 
-  data() {
-    return {
-      formData: {},
-    };
-  },
-  created() {
-    this.addInitValue();
-  },
+    data() {
+        return {
+            formData: {}
+        };
+    },
+    created() {
+        this.addInitValue();
+    },
 
-  methods: {
+    methods: {
     // 校验
-    onValidate(callback) {
-      this.$refs.formRef.validate((valid) => {
-        if (valid) {
-          callback();
-        } else {
-          return false;
+        onValidate(callback) {
+            this.$refs.formRef.validate((valid) => {
+                if (valid) {
+                    callback();
+                } else {
+                    return false;
+                }
+            });
+        },
+        // 添加初始值
+        addInitValue() {
+            const obj = {};
+            this.formOptions.forEach((curr) => {
+                if (curr.initValue !== undefined) {
+                    obj[curr.prop] = curr.initValue;
+                }
+            });
+            this.formData = obj;
         }
-      });
-    },
-    // 添加初始值
-    addInitValue() {
-      const obj = {};
-      this.formOptions.forEach((curr) => {
-        if (curr.initValue !== undefined) {
-          obj[curr.prop] = curr.initValue;
-        }
-      });
-      this.formData = obj;
-    },
-  },
-  components: { formItem },
+    }
 };
 </script>
 
