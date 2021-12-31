@@ -96,11 +96,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/mixin.scss";
+@import '~@/styles/mixin.scss';
 .search-form-box {
   margin-bottom: 20px;
   &__body {
-    @include grid-mode(4, 0, 0);
+    @include grid-mode(4, 0,0)
   }
 }
 .el-form-item {
