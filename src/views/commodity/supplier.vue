@@ -67,41 +67,42 @@
             @current-change="handleCurrentChange"
         />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form :model="ruleForm" ref="ruleForm" label-position="left" label-width="100px" inline>
-                <el-form-item label="编号" :props="ruleForm.numbers">
-                    <el-input v-model="ruleForm.numbers" placeholder="编号"></el-input>
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="100px" inline>
+                <el-form-item label="编号">
+                    <el-input v-model="ruleForm.numbers" placeholder="编号" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="名称" :props="ruleForm.name">
-                    <el-input v-model="ruleForm.name" placeholder="供应商名称"></el-input>
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="ruleForm.name" placeholder="供应商名称" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="联系人" :props="ruleForm.contacts">
-                    <el-input v-model="ruleForm.contacts" placeholder="联系人"></el-input>
+                <el-form-item label="联系人" prop="contacts">
+                    <el-input v-model="ruleForm.contacts" placeholder="联系人" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="联系电话" :props="ruleForm.mobile">
-                    <el-input v-model="ruleForm.mobile" placeholder="联系电话"></el-input>
+                <el-form-item label="联系电话">
+                    <el-input v-model="ruleForm.mobile" placeholder="联系电话" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="经营方式" :props="ruleForm.mode">
-                    <el-input v-model="ruleForm.mode" placeholder="请选择经营方式"></el-input>
+                <el-form-item label="经营方式">
+                    <el-input v-model="ruleForm.mode" placeholder="请选择经营方式" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="业务员姓名" :props="ruleForm.salesman">
-                    <el-input v-model="ruleForm.salesman" placeholder="业务员姓名"></el-input>
+                <el-form-item label="业务员姓名">
+                    <el-input v-model="ruleForm.salesman" placeholder="业务员姓名" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="业务员电话" :props="ruleForm.salesmanPhone">
-                    <el-input v-model="ruleForm.salesmanPhone" placeholder="业务员电话"></el-input>
+                <el-form-item label="业务员电话">
+                    <el-input v-model="ruleForm.salesmanPhone" placeholder="业务员电话" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="省份" :props="ruleForm.province">
-                    <el-input v-model="ruleForm.province" placeholder="请选择省份"></el-input>
+                <el-form-item label="省份">
+                    <el-input v-model="ruleForm.province" placeholder="请选择省份" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="城市" :props="ruleForm.city">
-                    <el-input v-model="ruleForm.city" placeholder="请选择城市"></el-input>
+                <el-form-item label="城市">
+                    <el-input v-model="ruleForm.city" placeholder="请选择城市" size="small" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="详细地址" :props="ruleForm.address">
-                    <el-input v-model="ruleForm.address" placeholder="详细地址"></el-input>
+                <el-form-item label="详细地址">
+                    <el-input v-model="ruleForm.address" placeholder="详细地址" size="small" clearable></el-input>
                 </el-form-item>
             </el-form>
             <template #footer>
-                <el-button type="primary" size="small">保存</el-button>
-                <el-button size="small" @click="closeDialog">取消</el-button>
+                <el-button @click="handleSubmit" type="primary" size="medium" :loading="isLoading">保存</el-button>
+                <el-button @click="closeDialog" size="medium">取消</el-button>
+                <el-button @click="resetForm" size="medium">重置</el-button>
             </template>
         </CustomDialog>
     </div>
@@ -416,8 +417,17 @@ export default {
                 city: '', // 城市
                 address: '' // 详细地址
             },
+            rules: {
+                name: [
+                    { required: true, message: '请输入供应商名称', trigger: 'change' }
+                ],
+                contacts: [
+                    { required: true, message: '请输入联系人', trigger: 'change' }
+                ]
+            },
             isShowDialog: false, // 是否显示弹窗
-            dialogTitle: '新增供应商' // 弹窗标题
+            dialogTitle: '新增供应商', // 弹窗标题
+            isLoading: false
         };
     },
 
@@ -449,8 +459,29 @@ export default {
             this.dialogTitle = '编辑供应商';
             this.isShowDialog = true;
         },
+        /**
+         * 关闭弹窗
+         */
         closeDialog() {
             this.isShowDialog = false;
+            this.resetForm();
+        },
+        /**
+         * 重置表单
+         */
+        resetForm() {
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
+        },
+        /**
+         * 提交表单
+         */
+        handleSubmit() {
+            this.isLoading = true;
+            setTimeout(() => {
+                this.closeDialog();
+                this.isLoading = false;
+            }, 1000);
         },
         /**
          * 删除
