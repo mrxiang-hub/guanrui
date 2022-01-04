@@ -64,7 +64,7 @@
                 </el-form-item>
             </el-form>
             <template #footer>
-                <el-button type="primary" size="medium" @click="handleSubmit">确定</el-button>
+                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
                 <el-button size="medium" @click="closeDialog">取消</el-button>
                 <el-button size="medium" @click="resetForm">重置</el-button>
             </template>
@@ -228,7 +228,8 @@ export default {
                 name: [
                     { required: true, message: '请输入颜色名称', trigger: 'change' }
                 ]
-            }
+            },
+            isLoading: false
         };
     },
 
