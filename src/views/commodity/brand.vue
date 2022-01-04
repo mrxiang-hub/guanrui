@@ -20,6 +20,7 @@
                             type="primary"
                             icon="el-icon-plus"
                             size="mini"
+                            @click="handleAdd"
                         >新增
                         </el-button>
                         <el-button
@@ -58,12 +59,28 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
+        <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left">
+                <el-form-item label="品牌编码" prop="code">
+                    <el-input placeholder="品牌编码" v-model="ruleForm.code" size="small"></el-input>
+                </el-form-item>
+                <el-form-item label="品牌名称" prop="name">
+                    <el-input placeholder="品牌名称" v-model="ruleForm.name" size="small"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
+                <el-button size="medium" @click="closeDialog">取消</el-button>
+                <el-button size="medium" @click="resetForm">重置</el-button>
+            </template>
+        </CustomDialog>
     </div>
 </template>
 
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import CustomDialog from '@/components/customDialog/customDialog';
 import tableMixin from '@/mixin/table';
 
 export default {
@@ -71,7 +88,8 @@ export default {
     mixins: [tableMixin],
     components: {
         SearchForm,
-        CustomTable
+        CustomTable,
+        CustomDialog
     },
     data() {
         return {
@@ -199,7 +217,22 @@ export default {
                     placeholder: '供应商编码/名称/联系人',
                     clearable: true
                 }
-            ]
+            ],
+            dialogTitle: '新增品牌',
+            isShowDialog: false,
+            ruleForm: {
+                code: '',
+                name: ''
+            },
+            rules: {
+                code: [
+                    { required: true, message: '请输入品牌编码', trigger: 'change' }
+                ],
+                name: [
+                    { required: true, message: '请输入品牌名称', trigger: 'change' }
+                ]
+            },
+            isLoading: false
         };
     },
 
@@ -209,14 +242,30 @@ export default {
          * @param data
          */
         handleEdit(data) {
-
+            this.isShowDialog = true;
+            this.dialogTitle = '编辑品牌';
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-
+            this.$confirm('确定要删除吗?', '删除', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         /**
          * 分页控制每页多少条
@@ -241,6 +290,37 @@ export default {
          */
         handleImport() {
 
+        },
+        /**
+         * 关闭弹窗
+         */
+        closeDialog() {
+            this.isShowDialog = false;
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
+        },
+        /**
+         * 重置新增编辑表单
+         */
+        resetForm() {
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
+        },
+        /**
+         * 新增品牌
+         */
+        handleAdd() {
+            this.isShowDialog = true;
+        },
+        /**
+         * 提交表单
+         */
+        handleSubmit() {
+            this.isLoading = true;
+            setTimeout(() => {
+                this.closeDialog();
+                this.isLoading = false;
+            }, 1000);
         }
     }
 };
