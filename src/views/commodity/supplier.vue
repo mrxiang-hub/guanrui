@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
@@ -8,7 +8,7 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -112,6 +112,7 @@
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 import CustomDialog from '@/components/customDialog/customDialog';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'supplier',
@@ -120,6 +121,7 @@ export default {
         CustomTable,
         CustomDialog
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
