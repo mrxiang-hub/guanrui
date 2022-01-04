@@ -214,7 +214,7 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '供应商编码/名称/联系人',
+                    placeholder: '品牌编码/品牌名称',
                     clearable: true
                 }
             ],

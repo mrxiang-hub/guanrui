@@ -9,7 +9,7 @@
                     @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">

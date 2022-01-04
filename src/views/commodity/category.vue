@@ -1,15 +1,17 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
                 <el-button
                     size="mini"
+                    @click="handleReset"
                 >重置
                 </el-button>
             </template>
@@ -29,6 +31,7 @@
                             type="primary"
                             icon="el-icon-plus"
                             size="mini"
+                            @click="handleAdd"
                         >新增
                         </el-button>
                     </div>
@@ -61,18 +64,40 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
+        <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left">
+                <el-form-item label="父类名称" prop="parentTypeName">
+                    <el-input placeholder="父类名称" size="small" v-model="ruleForm.parentTypeName"></el-input>
+                </el-form-item>
+                <el-form-item label="分类编码" prop="typeCode">
+                    <el-input placeholder="分类编码" size="small" v-model="ruleForm.typeCode"></el-input>
+                </el-form-item>
+                <el-form-item label="分类名称" prop="typeName">
+                    <el-input placeholder="分类名称" size="small" v-model="ruleForm.typeName"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
+                <el-button size="medium" @click="closeDialog">取消</el-button>
+                <el-button size="medium" @click="resetForm">重置</el-button>
+            </template>
+        </CustomDialog>
     </div>
 </template>
 
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import CustomDialog from '@/components/customDialog/customDialog';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'category',
+    mixins: [TableMixin],
     components: {
         SearchForm,
-        CustomTable
+        CustomTable,
+        CustomDialog
     },
     data() {
         return {
@@ -187,7 +212,7 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '供应商编码/名称/联系人',
+                    placeholder: '类别编码/类别名称',
                     clearable: true
                 }
             ],
@@ -218,7 +243,26 @@ export default {
                 label: 'label',
                 disabled: 'disabled',
                 isLeaf: 'isLeaf'
-            }
+            },
+            dialogTitle: '新增类别',
+            isShowDialog: false,
+            ruleForm: {
+                parentTypeName: '',
+                typeCode: '',
+                typeName: ''
+            },
+            rules: {
+                parentTypeName: [
+                    { required: true, message: '请输入父类名称', trigger: 'change' }
+                ],
+                typeCode: [
+                    { required: true, message: '请输入分类编码', trigger: 'change' }
+                ],
+                typeName: [
+                    { required: true, message: '请输入分类名称', trigger: 'change' }
+                ]
+            },
+            isLoading: false
         };
     },
 
@@ -228,64 +272,93 @@ export default {
          * @param data
          */
         handleEdit(data) {
-            console.log(data, 11111);
+            this.dialogTitle = '编辑分类';
+            this.isShowDialog = true;
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+            this.$confirm('确定要删除吗?', '删除', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        /**
+         * 搜索
+         */
+        handleSearch() {
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
+
         },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
+        /**
+         * 新增
+         */
+        handleAdd() {
+            this.dialogTitle = '新增类别';
+            this.isShowDialog = true;
+        },
+        /**
+         * 关闭弹窗
+         */
+        closeDialog() {
+            this.isShowDialog = false;
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
+        },
+        /**
+         * 重置表单
+         */
+        resetForm() {
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
+        },
+        /**
+         * 提交表单
+         */
+        handleSubmit() {
+            this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
-                    callback();
+                    this.isLoading = true;
+                    setTimeout(() => {
+                        this.closeDialog();
+                        this.isLoading = false;
+                    }, 1000);
                 } else {
                     return false;
                 }
             });
         },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
-        },
+        /**
+         * 点击树形控件节点
+         * @param data
+         */
         handleNodeClick(data) {
-            console.log(data);
+
         }
     }
 };
