@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
@@ -9,7 +9,7 @@
                     @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini" @click="resetForm">重置</el-button>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
