@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button size="mini">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -19,7 +20,15 @@
                             type="primary"
                             icon="el-icon-plus"
                             size="mini"
+                            @click="handleAdd"
                         >新增
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-upload2"
+                            size="mini"
+                            @click="handleUpload"
+                        >导入
                         </el-button>
                     </div>
                     <template slot="handle" slot-scope="slotProps">
@@ -51,18 +60,37 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
+        <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left">
+                <el-form-item label="尺寸编码" prop="code">
+                    <el-input placeholder="请输入尺寸编码" v-model="ruleForm.code" size="small"></el-input>
+                </el-form-item>
+                <el-form-item label="尺寸名称" prop="name">
+                    <el-input placeholder="请输入尺寸名称" v-model="ruleForm.name" size="small"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button type="primary" size="medium" @click="handleSubmit">确定</el-button>
+                <el-button size="medium" @click="closeDialog">取消</el-button>
+                <el-button size="medium" @click="resetForm">重置</el-button>
+            </template>
+        </CustomDialog>
     </div>
 </template>
 
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import CustomDialog from '@/components/customDialog/customDialog';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'size',
+    mixins: [TableMixin],
     components: {
         SearchForm,
-        CustomTable
+        CustomTable,
+        CustomDialog
     },
     data() {
         return {
@@ -189,74 +217,121 @@ export default {
                     prop: 'keyWord',
                     element: 'el-input',
                     initValue: undefined,
-                    placeholder: '供应商编码/名称/联系人',
+                    placeholder: '尺寸编码/尺寸名称',
                     clearable: true
                 }
-            ]
+            ],
+            dialogTitle: '新增尺码',
+            isShowDialog: false,
+            ruleForm: {
+                code: '',
+                name: ''
+            },
+            rules: {
+                code: [
+                    {
+                        required: true, message: '请输入尺寸编码', trigger: 'change'
+                    }
+                ],
+                name: [
+                    {
+                        required: true, message: '请输入尺寸名称', trigger: 'change'
+                    }
+                ]
+            }
         };
     },
 
     methods: {
         /**
+         * 新增
+         */
+        handleAdd() {
+            this.isShowDialog = true;
+        },
+        /**
+         * 导入
+         */
+        handleUpload() {
+
+        },
+        /**
          * 编辑
          * @param data
          */
         handleEdit(data) {
-            console.log(data, 11111);
+            this.isShowDialog = true;
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+            this.$confirm('确定要删除吗?', '删除', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
+
         },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
+        /**
+         * 搜索
+         */
+        handleSearch() {
+
+        },
+        /**
+         * 关闭弹窗
+         */
+        closeDialog() {
+            this.isShowDialog = false;
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
+        },
+        /**
+         * 提交表单
+         */
+        handleSubmit() {
+            this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
-                    callback();
+                    this.isLoading = true;
+                    setTimeout(() => {
+                        this.closeDialog();
+                        this.isLoading = false;
+                    }, 1000);
                 } else {
                     return false;
                 }
             });
         },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+        /**
+         * 重置表单
+         */
+        resetForm() {
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
         }
     }
 };
