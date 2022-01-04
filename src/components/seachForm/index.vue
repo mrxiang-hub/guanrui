@@ -96,7 +96,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
+//@import '@/styles/mixin.scss';
+@import '@/styles/mixin.scss';
 .search-form-box {
   margin-bottom: 20px;
   &__body {
