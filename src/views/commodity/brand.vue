@@ -6,9 +6,10 @@
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button type="default" size="mini" @click="resetForm">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -63,9 +64,11 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import tableMixin from '@/mixin/table';
 
 export default {
     name: 'brand',
+    mixins: [tableMixin],
     components: {
         SearchForm,
         CustomTable
@@ -206,20 +209,20 @@ export default {
          * @param data
          */
         handleEdit(data) {
-            console.log(data, 11111);
+
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
@@ -227,40 +230,17 @@ export default {
         handleCurrentChange() {
             console.log(2222);
         },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
+        /**
+         * 搜索
+         */
+        handleSearch() {
+
         },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+        /**
+         * 导入
+         */
+        handleImport() {
+
         }
     }
 };
