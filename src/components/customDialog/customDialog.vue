@@ -5,7 +5,7 @@
             :visible.sync="show"
             width="60%"
             :show-close="false"
-            @close="handleClose"
+            :before-close="handleClose"
         >
             <div slot="title" class="c-custom-dialog__header">
                 <div class="c-custom-dialog__title">{{ title }}</div>
@@ -27,7 +27,7 @@ export default {
     props: {
         show: {
             type: Boolean,
-            default: () => true
+            default: () => false
         },
         title: {
             type: String,

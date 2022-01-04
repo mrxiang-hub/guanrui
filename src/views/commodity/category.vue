@@ -358,7 +358,6 @@ export default {
          * @param data
          */
         handleNodeClick(data) {
-
         }
     }
 };
@@ -378,6 +377,7 @@ export default {
         border: 1px solid #e4e7ed;
         border-radius: 8px;
         margin-right: 20px;
+        padding-top: 20px;
     }
 
     &__body-table {
