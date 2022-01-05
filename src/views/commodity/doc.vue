@@ -90,12 +90,23 @@
             @current-change="handleCurrentChange"
         />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" label-position="left" inline>
+            <el-form
+                ref="ruleForm"
+                class="doc-dialog"
+                :model="ruleForm"
+                :rules="rules"
+                label-width="100px"
+                label-position="left"
+            >
                 <el-form-item label="商品款号">
                     <el-input placeholder="请输入商品款号" size="small" />
                 </el-form-item>
                 <el-form-item label="供应商">
-                    <el-input placeholder="请选择供应商" size="small" />
+                    <el-select placeholder="请选择供应商" size="small">
+                        <el-option label="河南" value="1"></el-option>
+                        <el-option label="上海" value="2"></el-option>
+                        <el-option label="郑州" value="3"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="商品名称">
                     <el-input placeholder="请输入商品名称" size="small" />
@@ -198,8 +209,8 @@
                         </div>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="备注">
-                    <el-input placeholder="请输入备注" />
+                <el-form-item class="doc-dialog__remark" label="备注">
+                    <el-input placeholder="请输入备注" size="small" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -496,6 +507,22 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/styles/mixin";
 
+.doc-dialog {
+    @include grid-mode(2, 0, 0);
+
+    &__remark {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+}
+
+.el-input {
+    width: calc(100% - 20px);
+}
+::v-deep .el-select {
+    width: 400px!important;
+}
 </style>
 
