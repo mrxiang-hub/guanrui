@@ -11,9 +11,12 @@
                 <div class="c-custom-dialog__title">{{ title }}</div>
                 <span class="c-custom-dialog__close el-icon-close" @click="handleClose" />
             </div>
-            <el-scrollbar class="c-custom-dialog__body">
+            <!--            <el-scrollbar class="c-custom-dialog__body">-->
+            <!--                <slot />-->
+            <!--            </el-scrollbar>-->
+            <div class="c-custom-dialog__body">
                 <slot />
-            </el-scrollbar>
+            </div>
             <div class="c-custom-dialog__footer">
                 <slot name="footer" />
             </div>

@@ -105,7 +105,7 @@ export default {
     margin-bottom: 20px;
 
     &__body {
-        @include grid-mode(4, 0, 0)
+        @include grid-mode(3, 0, 0)
     }
 }
 
