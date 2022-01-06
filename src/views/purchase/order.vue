@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -25,6 +26,7 @@
                             type="primary"
                             icon="el-icon-s-tools"
                             size="mini"
+                            @click="handleSetting"
                         >列设置
                         </el-button>
                     </div>
@@ -56,18 +58,29 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
+        <CustomDialog title="自定义报表" :show="isShowDialog" @close="closeDialog">
+            <template #footer>
+                <el-button type="primary" size="medium" @click="handleSubmit">确定</el-button>
+                <el-button size="medium" @click="closeDialog">取消</el-button>
+                <el-button size="medium">重置</el-button>
+            </template>
+        </CustomDialog>
     </div>
 </template>
 
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import CustomDialog from '@/components/customDialog/customDialog';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'order',
+    mixins: [TableMixin],
     components: {
         SearchForm,
-        CustomTable
+        CustomTable,
+        CustomDialog
     },
     data() {
         return {
@@ -257,71 +270,76 @@ export default {
                         }
                     ]
                 }
-            ]
+            ],
+            isShowDialog: false
         };
     },
 
     methods: {
         /**
+         * 搜索
+         */
+        handleSearch() {
+
+        },
+        /**
          * 编辑
          * @param data
          */
         handleEdit(data) {
-            console.log(data, 11111);
+
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+            this.$confirm('确定要删除吗?', '删除', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
+
         },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
+        /**
+         * 点击列设置按钮
+         */
+        handleSetting() {
+            this.isShowDialog = true;
         },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
+        /**
+         * 关闭弹窗
+         */
+        closeDialog() {
+            this.isShowDialog = false;
         },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+        /**
+         * 提交
+         */
+        handleSubmit() {
+
         }
     }
 };
