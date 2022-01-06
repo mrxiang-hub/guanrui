@@ -1,13 +1,20 @@
 <template>
     <div class="c-custom-table">
-        <slot name="header"/>
+        <slot name="header" />
         <el-table
+            ref="multipleTable"
             class="c-custom-table__body"
             height="100%"
             :data="tableData"
             border
             :header-cell-style="{ background: '#eef1f6', color: '#606266' }"
+            @selection-change="handleSelectionChange"
         >
+            <el-table-column
+                v-if="selection"
+                type="selection"
+                width="55"
+            />
             <el-table-column
                 v-for="(item, index) in columns"
                 :key="index"
@@ -46,12 +53,25 @@ export default {
         tableData: {
             type: Array,
             default: () => []
+        },
+        selection: {
+            type: Boolean,
+            default: () => false
         }
     },
     data() {
         return {
             row: {}
         };
+    },
+    methods: {
+        /**
+         * 获取选中的值
+         */
+        getSelection() {
+            const arr = this.$refs['multipleTable'].selection;
+            return arr;
+        }
     }
 };
 </script>

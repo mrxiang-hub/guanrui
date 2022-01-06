@@ -14,7 +14,7 @@
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data="tableData">
+                <CustomTable ref="customTable" :columns="columns" :table-data="tableData" :selection="true">
                     <div slot="header" class="app-container__table-header">
                         <el-button type="primary" size="mini" icon="el-icon-printer">条码打印</el-button>
                         <el-button type="primary" size="mini" icon="el-icon-s-tools">列设置</el-button>
@@ -298,7 +298,8 @@ export default {
          * 搜索
          */
         handleSearch() {
-
+            const arr = this.$refs['customTable'].getSelection();
+            console.log(arr);
         },
         /**
          * 编辑
