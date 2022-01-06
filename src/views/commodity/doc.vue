@@ -518,11 +518,11 @@ export default {
     }
 }
 
-.el-input {
+::v-deep .el-select,.el-input {
     width: calc(100% - 20px);
 }
-::v-deep .el-select {
-    width: 400px!important;
+::v-deep .el-select .el-input {
+    width: 100%;
 }
 </style>
 
