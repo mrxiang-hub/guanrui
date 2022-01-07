@@ -1,70 +1,73 @@
 <template>
-    <div class="app-container">
-        <SearchForm ref="searchForm" :form-options="formOptions">
-            <template #handleBtn>
-                <el-button
-                    type="primary"
-                    icon="el-icon-search"
-                    size="mini"
-                    @click="handleSearch"
-                >查询
-                </el-button>
-                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
-            </template>
-        </SearchForm>
-        <div class="app-container__body">
-            <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data="tableData">
-                    <div slot="header" class="app-container__table-header">
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="mini"
-                        >新增
-                        </el-button>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-s-tools"
-                            size="mini"
-                            @click="handleSetting"
-                        >列设置
-                        </el-button>
-                    </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-search"
-                            class="handle-table-btn"
-                            @click="handleEdit(slotProps.row)"
-                        >查看
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
-                </CustomTable>
+    <div class="outer-layer">
+        <div v-if="false" class="app-container">
+            <SearchForm ref="searchForm" :form-options="formOptions">
+                <template #handleBtn>
+                    <el-button
+                        type="primary"
+                        icon="el-icon-search"
+                        size="mini"
+                        @click="handleSearch"
+                    >查询
+                    </el-button>
+                    <el-button type="default" size="mini" @click="handleReset">重置</el-button>
+                </template>
+            </SearchForm>
+            <div class="app-container__body">
+                <div class="app-container__body-table">
+                    <CustomTable :columns="columns" :table-data="tableData">
+                        <div slot="header" class="app-container__table-header">
+                            <el-button
+                                type="primary"
+                                icon="el-icon-plus"
+                                size="mini"
+                            >新增
+                            </el-button>
+                            <el-button
+                                type="primary"
+                                icon="el-icon-s-tools"
+                                size="mini"
+                                @click="handleSetting"
+                            >列设置
+                            </el-button>
+                        </div>
+                        <template slot="handle" slot-scope="slotProps">
+                            <el-button
+                                icon="el-icon-search"
+                                class="handle-table-btn"
+                                @click="handleEdit(slotProps.row)"
+                            >查看
+                            </el-button>
+                            <el-button
+                                icon="el-icon-delete-solid"
+                                class="handle-table-btn"
+                                type="danger"
+                                @click="handleDelete(slotProps.row)"
+                            >删除
+                            </el-button>
+                        </template>
+                    </CustomTable>
+                </div>
             </div>
+            <el-pagination
+                class="table-pagination"
+                :current-page="pagination.currentPage"
+                :page-sizes="[5, 10, 15, 20]"
+                :page-size="pagination.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="pagination.total"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+            />
+            <CustomDialog title="自定义报表" :show="isShowDialog" @close="closeDialog">
+                <template #footer>
+                    <el-button type="primary" size="medium" @click="handleSubmit">确定</el-button>
+                    <el-button size="medium" @click="closeDialog">取消</el-button>
+                    <el-button size="medium">重置</el-button>
+                </template>
+            </CustomDialog>
         </div>
-        <el-pagination
-            class="table-pagination"
-            :current-page="pagination.currentPage"
-            :page-sizes="[5, 10, 15, 20]"
-            :page-size="pagination.pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="pagination.total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
-        <CustomDialog title="自定义报表" :show="isShowDialog" @close="closeDialog">
-            <template #footer>
-                <el-button type="primary" size="medium" @click="handleSubmit">确定</el-button>
-                <el-button size="medium" @click="closeDialog">取消</el-button>
-                <el-button size="medium">重置</el-button>
-            </template>
-        </CustomDialog>
+        <OrderPopup></OrderPopup>
     </div>
 </template>
 
@@ -72,16 +75,18 @@
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 import CustomDialog from '@/components/customDialog/customDialog';
+import OrderPopup from './components/orderPopup';
 import TableMixin from '@/mixin/table';
 
 export default {
-    name: 'order',
-    mixins: [TableMixin],
+    name: 'Order',
     components: {
         SearchForm,
         CustomTable,
-        CustomDialog
+        CustomDialog,
+        OrderPopup
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -208,7 +213,7 @@ export default {
                 },
                 {
                     label: '门店',
-                    prop: 'keyWord',
+                    prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '门店选择',
@@ -226,7 +231,7 @@ export default {
                 },
                 {
                     label: '供应商',
-                    prop: 'keyWord',
+                    prop: 'supplier',
                     element: 'el-input',
                     initValue: undefined,
                     placeholder: '请选择供应商',
@@ -234,7 +239,7 @@ export default {
                 },
                 {
                     label: '开始日期',
-                    prop: 'keyWord',
+                    prop: 'startTime',
                     element: 'el-date-picker',
                     initValue: undefined,
                     placeholder: '选择开始日期',
@@ -243,7 +248,7 @@ export default {
                 },
                 {
                     label: '结束日期',
-                    prop: 'keyWord',
+                    prop: 'endTime',
                     element: 'el-date-picker',
                     initValue: undefined,
                     placeholder: '选择结束日期',
@@ -252,7 +257,7 @@ export default {
                 },
                 {
                     label: '单据状态',
-                    prop: 'keyWord',
+                    prop: 'status',
                     element: 'el-radio-group',
                     initValue: 3,
                     radios: [
@@ -345,6 +350,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
+    .outer-layer {
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
