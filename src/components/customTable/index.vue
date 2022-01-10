@@ -71,6 +71,12 @@ export default {
         getSelection() {
             const arr = this.$refs['multipleTable'].selection;
             return arr;
+        },
+        /**
+         * 被选中的值发生变化
+         */
+        handleSelectionChange() {
+
         }
     }
 };

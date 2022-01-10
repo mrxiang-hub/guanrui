@@ -2,7 +2,7 @@
     <div class="popup">
         <div class="popup__header">
             <div class="popup__title">新增采购订单</div>
-            <span class="el-icon-close popup__close-btn" />
+            <span class="el-icon-close popup__close-btn" @click="closePopup" />
         </div>
         <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
@@ -25,7 +25,7 @@
             <el-input v-model="remark" type="textarea" placeholder="备注" resize="none" rows="5" />
             <div class="popup__btns">
                 <el-button type="primary" icon="el-icon-document-checked" size="small">保存</el-button>
-                <el-button icon="el-icon-back" size="small">返回</el-button>
+                <el-button icon="el-icon-back" size="small" @click="closePopup">返回</el-button>
             </div>
         </div>
     </div>
@@ -55,11 +55,11 @@ export default {
                     options: [
                         {
                             label: '管锐技术测试总部',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '管锐技术测试分店',
-                            value: 2
+                            value: '2'
                         }
                     ]
                 },
@@ -243,6 +243,14 @@ export default {
             ],
             remark: ''
         };
+    },
+    methods: {
+        /**
+         * 关闭Popup
+         */
+        closePopup() {
+            this.$emit('closePopup');
+        }
     }
 };
 </script>
@@ -259,7 +267,7 @@ export default {
         flex-direction: row;
         align-content: center;
         justify-content: space-between;
-        padding: 20px;
+        padding: 10px;
         color: #ffffff;
         font-size: 14px;
     }
