@@ -1,30 +1,58 @@
 <template>
     <div class="popup">
         <div class="popup__header">
-            <div class="popup__title">新增采购订单</div>
+            <div class="popup__title">采购订单详情</div>
             <span class="el-icon-close popup__close-btn" @click="closePopup" />
         </div>
-        <SearchForm ref="searchForm" :form-options="formOptions">
-            <template #handleBtn>
-                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
-            </template>
-        </SearchForm>
+        <div class="popup__form">
+            <div class="popup__form-item">
+                <span class="popup__form-label">单号</span>
+                <span class="popup__form-val">P00027620210615210432</span>
+            </div>
+            <div>
+                <span class="popup__form-label">制单人</span>
+                <span class="popup__form-val">明超</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">制单日期</span>
+                <span class="popup__form-val">2022-01-10 17:51:00</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">门店</span>
+                <span class="popup__form-val">管锐技术测试总部</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">审核人</span>
+                <span class="popup__form-val">明超</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">审核时间</span>
+                <span class="popup__form-val">2022-01-10 17:52:00</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">供应商</span>
+                <span class="popup__form-val">上海七浦路</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">数量</span>
+                <span class="popup__form-val">数量</span>
+            </div>
+            <div class="popup__form-item">
+                <span class="popup__form-label">单据金额</span>
+                <span class="popup__form-val">24300</span>
+            </div>
+        </div>
         <div class="popup__body">
             <CustomTable :columns="columns" :table-data="tableData">
-                <div slot="header" class="app-container__table-header">
-                    <el-button
-                        type="primary"
-                        icon="el-icon-circle-check"
-                        size="mini"
-                    >选择商品
-                    </el-button>
-                </div>
             </CustomTable>
         </div>
         <div class="popup__bottom">
-            <el-input v-model="remark" type="textarea" placeholder="备注" resize="none" rows="5" />
+            <div class="popup__remark">
+                <span class="popup__remark-label">备注：</span>
+                这是备注
+            </div>
             <div class="popup__btns">
-                <el-button type="primary" icon="el-icon-document-checked" size="small">保存</el-button>
+                <el-button type="primary" icon="el-icon-upload2" size="small">导出</el-button>
                 <el-button icon="el-icon-back" size="small" @click="closePopup">返回</el-button>
             </div>
         </div>
@@ -32,72 +60,18 @@
 </template>
 
 <script>
-import SearchForm from '@/components/seachForm';
 import CustomTable from '@/components/customTable';
-import TableMixin from '@/mixin/table';
 export default {
-    name: 'OrderPopup',
+    name: 'viewPopup',
     components: {
-        SearchForm,
         CustomTable
     },
-    mixins: [TableMixin],
     data() {
         return {
-            formOptions: [
-                {
-                    label: '门店',
-                    prop: 'store',
-                    element: 'el-select',
-                    initValue: undefined,
-                    placeholder: '门店选择',
-                    clearable: true,
-                    options: [
-                        {
-                            label: '管锐技术测试总部',
-                            value: '1'
-                        },
-                        {
-                            label: '管锐技术测试分店',
-                            value: '2'
-                        }
-                    ]
-                },
-                {
-                    label: '供应商',
-                    prop: 'supplier',
-                    element: 'el-input',
-                    initValue: undefined,
-                    placeholder: '请选择供应商',
-                    clearable: true
-                },
-                {
-                    label: '制单日期',
-                    prop: 'startTime',
-                    element: 'el-date-picker',
-                    initValue: undefined,
-                    placeholder: '选择开始日期',
-                    clearable: true,
-                    type: 'date'
-                },
-                {
-                    label: '单据金额',
-                    prop: 'amount',
-                    element: 'el-input',
-                    initValue: undefined,
-                    placeholder: '请输入单据金额',
-                    clearable: true
-                }
-            ],
             columns: [
                 {
                     prop: 'number',
                     label: '序号',
-                    width: ''
-                },
-                {
-                    prop: 'name',
-                    label: '点此新增行',
                     width: ''
                 },
                 {
@@ -256,6 +230,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/mixin.scss";
 .popup {
     height: 100%;
     overflow: hidden;
@@ -288,12 +263,32 @@ export default {
     &__bottom {
         padding: 20px;
     }
+    &__remark {
+        display: flex;
+        font-size: 14px;
+    }
+    &__remark-label {
+        width: 50px;
+    }
     &__btns {
         display: flex;
         align-content: center;
         justify-content: center;
         margin-top: 20px;
     }
-
+    &__form {
+        @include grid-mode(3, 0, 20px);
+        padding: 20px;
+    }
+    &__form-item {
+        font-size: 14px;
+    }
+    &__form-label {
+        display: inline-block;
+        width: 100px;
+    }
+    &__form-val {
+        color: #20a0ff;
+    }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="outer-layer">
         <transition  name="fade-transform" mode="out-in">
-            <div v-if="!isShowPopup" class="app-container">
+            <div v-if="!isShowAddPopup && !isShowViewPopup" class="app-container">
                 <SearchForm ref="searchForm" :form-options="formOptions">
                     <template #handleBtn>
                         <el-button
@@ -37,7 +37,7 @@
                                 <el-button
                                     icon="el-icon-search"
                                     class="handle-table-btn"
-                                    @click="handleEdit(slotProps.row)"
+                                    @click="handleView(slotProps.row)"
                                 >查看
                                 </el-button>
                                 <el-button
@@ -71,7 +71,10 @@
             </div>
         </transition>
         <transition  name="fade-transform" mode="out-in">
-            <OrderPopup v-if="isShowPopup" @closePopup="closePopup"></OrderPopup>
+            <AddPopup v-if="isShowAddPopup" @closePopup="closePopup"></AddPopup>
+        </transition>
+        <transition  name="fade-transform" mode="out-in">
+            <ViewPopup v-if="isShowViewPopup" @closePopup="closePopup"></ViewPopup>
         </transition>
     </div>
 </template>
@@ -80,7 +83,8 @@
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
 import CustomDialog from '@/components/customDialog/customDialog';
-import OrderPopup from './components/orderPopup';
+import AddPopup from './components/addPopup';
+import ViewPopup from './components/viewPopup';
 import TableMixin from '@/mixin/table';
 
 export default {
@@ -89,7 +93,8 @@ export default {
         SearchForm,
         CustomTable,
         CustomDialog,
-        OrderPopup
+        AddPopup,
+        ViewPopup
     },
     mixins: [TableMixin],
     data() {
@@ -282,7 +287,8 @@ export default {
                 }
             ],
             isShowDialog: false,
-            isShowPopup: false
+            isShowAddPopup: false,
+            isShowViewPopup: false
         };
     },
 
@@ -297,20 +303,23 @@ export default {
          * 新增
          */
         handleAdd() {
-            this.isShowPopup = true;
+            this.isShowAddPopup = true;
+            this.isShowViewPopup = false;
         },
         /**
          * 关闭popup
          */
         closePopup() {
-            this.isShowPopup = false;
+            this.isShowAddPopup = false;
+            this.isShowViewPopup = false;
         },
         /**
-         * 编辑
+         * 查看
          * @param data
          */
-        handleEdit(data) {
-
+        handleView(data) {
+            this.isShowAddPopup = false;
+            this.isShowViewPopup = true;
         },
         /**
          * 删除
