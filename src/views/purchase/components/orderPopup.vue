@@ -1,28 +1,31 @@
 <template>
-    <div class="order-popup">
-        <div class="order-popup__header">
-            <div class="order-popup__title">新增采购订单</div>
-            <span class="el-icon-close order-popup__close-btn" />
+    <div class="popup">
+        <div class="popup__header">
+            <div class="popup__title">新增采购订单</div>
+            <span class="el-icon-close popup__close-btn" />
         </div>
-        <div class="app-container">
-            <SearchForm ref="searchForm" :form-options="formOptions">
-                <template #handleBtn>
-                    <el-button type="default" size="mini" @click="handleReset">重置</el-button>
-                </template>
-            </SearchForm>
-            <div class="app-container__body">
-                <div class="app-container__body-table">
-                    <CustomTable :columns="columns" :table-data="tableData">
-                        <div slot="header" class="app-container__table-header">
-                            <el-button
-                                type="primary"
-                                icon="el-icon-circle-check"
-                                size="mini"
-                            >选择商品
-                            </el-button>
-                        </div>
-                    </CustomTable>
+        <SearchForm ref="searchForm" :form-options="formOptions">
+            <template #handleBtn>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
+            </template>
+        </SearchForm>
+        <div class="popup__body">
+            <CustomTable :columns="columns" :table-data="tableData">
+                <div slot="header" class="app-container__table-header">
+                    <el-button
+                        type="primary"
+                        icon="el-icon-circle-check"
+                        size="mini"
+                    >选择商品
+                    </el-button>
                 </div>
+            </CustomTable>
+        </div>
+        <div class="popup__bottom">
+            <el-input v-model="remark" type="textarea" placeholder="备注" resize="none" rows="5" />
+            <div class="popup__btns">
+                <el-button type="primary" icon="el-icon-document-checked" size="small">保存</el-button>
+                <el-button icon="el-icon-back" size="small">返回</el-button>
             </div>
         </div>
     </div>
@@ -137,14 +140,119 @@ export default {
                     label: '小计（元）',
                     width: ''
                 }
-            ]
+            ],
+            tableData: [
+                {
+                    code: '001',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                },
+                {
+                    code: '002',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                },
+                {
+                    code: '003',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                },
+                {
+                    code: '004',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                },
+                {
+                    code: '005',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                },
+                {
+                    code: '005',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                },
+                {
+                    code: '005',
+                    name: '郑州批发城',
+                    concat: '小郑',
+                    mobile: '1355454623',
+                    mode: '购销',
+                    province: '河南',
+                    city: '郑州',
+                    address: '河南省郑州市中原区',
+                    salesman: '小明',
+                    phone: '13183117895',
+                    createTime: '1636727628063',
+                    updateTime: '1636727628063'
+                }
+            ],
+            remark: ''
         };
     }
 };
 </script>
 
 <style lang="scss" scoped>
-.order-popup {
+.popup {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     &__header {
         background: #42b983;
         display: flex;
@@ -163,5 +271,21 @@ export default {
         cursor: pointer;
         font-size: 16px;
     }
+    &__body {
+        flex: 1;
+        padding: 0 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    &__bottom {
+        padding: 20px;
+    }
+    &__btns {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
 }
 </style>
