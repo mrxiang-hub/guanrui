@@ -62,10 +62,11 @@
                     @current-change="handleCurrentChange"
                 />
                 <CustomDialog title="自定义报表" :show="isShowDialog" @close="closeDialog">
+                    <CustomTable selection class="dialog-table" :columns="dialogColumns" :table-data="tableData">
+                    </CustomTable>
                     <template #footer>
                         <el-button type="primary" size="medium" @click="handleSubmit">确定</el-button>
                         <el-button size="medium" @click="closeDialog">取消</el-button>
-                        <el-button size="medium">重置</el-button>
                     </template>
                 </CustomDialog>
             </div>
@@ -133,6 +134,13 @@ export default {
                     prop: 'handle',
                     label: '操作',
                     width: 180
+                }
+            ],
+            dialogColumns: [
+                {
+                    prop: 'name',
+                    label: '',
+                    width: ''
                 }
             ],
             tableData: [
@@ -381,5 +389,11 @@ export default {
         width: 100%;
         height: 100%;
     }
+    ::v-deep .dialog-table {
+        //.el-table__header-wrapper {
+        //    display: none;
+        //}
+    }
+
 </style>
 
