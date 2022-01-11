@@ -38,22 +38,6 @@
                         >导出
                         </el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-edit"
-                            class="handle-table-btn"
-                            type="primary"
-                            @click="handleEdit(slotProps.row)"
-                        >编辑
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -68,42 +52,42 @@
             @current-change="handleCurrentChange"
         />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="100px" inline>
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-position="left" label-width="100px" inline>
                 <el-form-item label="编号">
-                    <el-input v-model="ruleForm.numbers" placeholder="编号" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.numbers" placeholder="编号" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="名称" prop="name">
-                    <el-input v-model="ruleForm.name" placeholder="供应商名称" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.name" placeholder="供应商名称" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="联系人" prop="contacts">
-                    <el-input v-model="ruleForm.contacts" placeholder="联系人" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.contacts" placeholder="联系人" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="联系电话">
-                    <el-input v-model="ruleForm.mobile" placeholder="联系电话" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.mobile" placeholder="联系电话" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="经营方式">
-                    <el-input v-model="ruleForm.mode" placeholder="请选择经营方式" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.mode" placeholder="请选择经营方式" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="业务员姓名">
-                    <el-input v-model="ruleForm.salesman" placeholder="业务员姓名" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.salesman" placeholder="业务员姓名" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="业务员电话">
-                    <el-input v-model="ruleForm.salesmanPhone" placeholder="业务员电话" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.salesmanPhone" placeholder="业务员电话" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="省份">
-                    <el-input v-model="ruleForm.province" placeholder="请选择省份" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.province" placeholder="请选择省份" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="城市">
-                    <el-input v-model="ruleForm.city" placeholder="请选择城市" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.city" placeholder="请选择城市" size="small" clearable/>
                 </el-form-item>
                 <el-form-item label="详细地址">
-                    <el-input v-model="ruleForm.address" placeholder="详细地址" size="small" clearable></el-input>
+                    <el-input v-model="ruleForm.address" placeholder="详细地址" size="small" clearable/>
                 </el-form-item>
             </el-form>
             <template #footer>
-                <el-button @click="handleSubmit" type="primary" size="medium" :loading="isLoading">保存</el-button>
-                <el-button @click="closeDialog" size="medium">取消</el-button>
-                <el-button @click="resetForm" size="medium">重置</el-button>
+                <el-button type="primary" size="medium" :loading="isLoading" @click="handleSubmit">保存</el-button>
+                <el-button size="medium" @click="closeDialog">取消</el-button>
+                <el-button size="medium" @click="resetForm">重置</el-button>
             </template>
         </CustomDialog>
     </div>
@@ -116,7 +100,7 @@ import CustomDialog from '@/components/customDialog/customDialog';
 import TableMixin from '@/mixin/table';
 
 export default {
-    name: 'supplier',
+    name: 'Supplier',
     components: {
         SearchForm,
         CustomTable,
@@ -192,7 +176,51 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑供应商';
+                                        this.isShowDialog = true;
+                                    }
+                                },
+                                props: {
+                                    size: 'mini',
+                                    type: 'primary',
+                                    icon: 'el-icon-edit'
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                },
+                                props: {
+                                    size: 'mini',
+                                    type: 'danger',
+                                    icon: 'el-icon-delete'
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -422,10 +450,10 @@ export default {
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入供应商名称', trigger: 'change' }
+                    {required: true, message: '请输入供应商名称', trigger: 'change'}
                 ],
                 contacts: [
-                    { required: true, message: '请输入联系人', trigger: 'change' }
+                    {required: true, message: '请输入联系人', trigger: 'change'}
                 ]
             },
             isShowDialog: false, // 是否显示弹窗
@@ -455,14 +483,6 @@ export default {
 
         },
         /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            this.dialogTitle = '编辑供应商';
-            this.isShowDialog = true;
-        },
-        /**
          * 关闭弹窗
          */
         closeDialog() {
@@ -485,28 +505,6 @@ export default {
                 this.closeDialog();
                 this.isLoading = false;
             }, 1000);
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            this.$confirm('确定要删除吗?', '删除', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
         },
         /**
          * 分页控制每页多少条

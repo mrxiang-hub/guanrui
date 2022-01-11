@@ -25,12 +25,19 @@
                 :fixed="item.fixed"
             >
                 <template slot-scope="scope">
-                    <slot
-                        v-if="item.prop === 'handle'"
-                        name="handle"
+                    <!--                    <slot-->
+                    <!--                        v-if="item.prop === 'handle'"-->
+                    <!--                        name="handle"-->
+                    <!--                        :row="scope.row"-->
+                    <!--                        :column="scope.column"-->
+                    <!--                        :$index="scope.$index"-->
+                    <!--                    />-->
+                    <ex-slot
+                        v-if="item.render"
+                        :render="item.render"
                         :row="scope.row"
+                        :index="scope.$index"
                         :column="scope.column"
-                        :$index="scope.$index"
                     />
                     <span
                         v-else
@@ -48,7 +55,33 @@
 </template>
 
 <script>
+const exSlot = {
+    functional: true,
+    props: {
+        row: {
+            type: Object,
+            default: {}
+        },
+        index: Number,
+        column: {
+            type: Object,
+            default: {}
+        },
+        render: Function
+    },
+    render: (h, data) => {
+        const params = {
+            row: data.props.row,
+            index: data.props.index,
+            column: data.props.column
+        };
+        return data.props.render(h, params);
+    }
+};
 export default {
+    components: {
+        'ex-slot': exSlot
+    },
     props: {
         columns: {
             type: Array,
