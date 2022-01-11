@@ -16,7 +16,7 @@
                 </SearchForm>
                 <div class="app-container__body">
                     <div class="app-container__body-table">
-                        <CustomTable :columns="columns" :table-data="tableData">
+                        <CustomTable :columns="columns" :table-data="tableData" @clickText="clickText">
                             <div slot="header" class="app-container__table-header">
                                 <el-button
                                     type="primary"
@@ -105,7 +105,8 @@ export default {
                     prop: 'code',
                     label: '采购单号',
                     width: '',
-                    sortable: true
+                    sortable: true,
+                    primary: true
                 },
                 {
                     prop: 'name',
@@ -322,6 +323,14 @@ export default {
             this.isShowViewPopup = false;
         },
         /**
+         * 点击表格中蓝色文字
+         * @param data
+         */
+        clickText(data) {
+            this.isShowViewPopup = true;
+            this.isShowAddPopup = false;
+        },
+        /**
          * 查看
          * @param data
          */
@@ -389,11 +398,11 @@ export default {
         width: 100%;
         height: 100%;
     }
-    ::v-deep .dialog-table {
+    //::v-deep .dialog-table {
         //.el-table__header-wrapper {
         //    display: none;
         //}
-    }
+    //}
 
 </style>
 

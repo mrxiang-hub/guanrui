@@ -94,7 +94,7 @@ export default {
             ],
             columns: [
                 {
-                    prop: 'number',
+                    prop: 'concat',
                     label: '序号',
                     width: ''
                 },

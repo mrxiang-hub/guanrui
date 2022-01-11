@@ -34,8 +34,12 @@
                     />
                     <span
                         v-else
+                        :class="{'c-custom-table__primary-val': item.primary}"
                         :title="scope.row[item.prop]"
                         class="c-custom-table__val"
+                        :row="scope.row"
+                        :column="scope.column"
+                        @click="clickText(scope.row)"
                     >{{ scope.row[item.prop] }}</span>
                 </template>
             </el-table-column>
@@ -77,6 +81,13 @@ export default {
          */
         handleSelectionChange() {
 
+        },
+        /**
+         * 点击表格中的蓝色文字
+         * @param data
+         */
+        clickText(data) {
+            this.$emit('clickText', data);
         }
     }
 };
@@ -98,6 +109,10 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    &__primary-val {
+        color: #20a0ff;
+        cursor: pointer;
     }
 }
 </style>
