@@ -45,26 +45,25 @@
         </div>
         <el-pagination
             class="table-pagination"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :current-page="pagination.currentPage"
             :page-sizes="[5, 10, 15, 20]"
             :page-size="pagination.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="pagination.total"
-        >
-        </el-pagination>
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="100px">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-position="left" label-width="100px">
                 <el-form-item label="颜色编码" prop="code">
-                    <el-input placeholder="请输入颜色编码" v-model="ruleForm.code" size="small"></el-input>
+                    <el-input v-model="ruleForm.code" placeholder="请输入颜色编码" size="small" />
                 </el-form-item>
                 <el-form-item label="颜色名称" prop="name">
-                    <el-input placeholder="请输入颜色名称" v-model="ruleForm.name" size="small"></el-input>
+                    <el-input v-model="ruleForm.name" placeholder="请输入颜色名称" size="small" />
                 </el-form-item>
             </el-form>
             <template #footer>
-                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
+                <el-button type="primary" size="medium" :loading="isLoading" @click="handleSubmit">确定</el-button>
                 <el-button size="medium" @click="closeDialog">取消</el-button>
                 <el-button size="medium" @click="resetForm">重置</el-button>
             </template>
@@ -79,13 +78,13 @@ import TableMixin from '@/mixin/table';
 import CustomDialog from '@/components/customDialog/customDialog';
 
 export default {
-    name: 'colour',
-    mixins: [TableMixin],
+    name: 'Colour',
     components: {
         SearchForm,
         CustomTable,
         CustomDialog
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -125,7 +124,59 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'mini',
+                                    icon: 'el-icon-edit'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑颜色';
+                                        this.isShowDialog = true;
+                                    }
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                props: {
+                                    type: 'danger',
+                                    size: 'mini',
+                                    icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -240,36 +291,6 @@ export default {
         handleAdd() {
             this.dialogTitle = '新增颜色';
             this.isShowDialog = true;
-        },
-        /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            this.dialogTitle = '编辑颜色';
-            this.isShowDialog = true;
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            this.$confirm('确定要删除吗?', '删除', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
         },
         /**
          * 分页控制每页多少条
