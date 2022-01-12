@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
@@ -8,7 +8,7 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -28,21 +28,6 @@
                         >列设置
                         </el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-search"
-                            class="handle-table-btn"
-                            @click="handleEdit(slotProps.row)"
-                        >查看
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -62,9 +47,11 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'putIn',
+    mixins: [TableMixin],
     components: {
         SearchForm,
         CustomTable
@@ -76,13 +63,45 @@ export default {
                     prop: 'code',
                     label: '入库单号',
                     width: '',
-                    sortable: true
+                    sortable: true,
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            },
+                            attrs: {
+                                title: params.row.code
+                            },
+                            on: {
+                                click: () => {
+
+                                }
+                            }
+                        }, params.row.code);
+                    }
                 },
                 {
                     prop: 'name',
                     label: '采购单号',
                     width: '',
-                    sortable: true
+                    sortable: true,
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            },
+                            attrs: {
+                                title: params.row.name
+                            },
+                            on: {
+                                click: () => {
+
+                                }
+                            }
+                        }, params.row.name);
+                    }
                 },
                 {
                     prop: 'concat',
@@ -122,7 +141,57 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    icon: 'el-icon-search'
+                                },
+                                style: {
+                                    padding: '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+
+                                    }
+                                }
+                            }, '查看'),
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'danger',
+                                    icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    padding: '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -213,7 +282,7 @@ export default {
                 },
                 {
                     label: '门店',
-                    prop: 'keyWord',
+                    prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '门店选择',
@@ -221,17 +290,17 @@ export default {
                     options: [
                         {
                             label: '管锐技术测试总部',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '管锐技术测试分店',
-                            value: 2
+                            value: '2'
                         }
                     ]
                 },
                 {
                     label: '供应商',
-                    prop: 'keyWord',
+                    prop: 'supper',
                     element: 'el-input',
                     initValue: undefined,
                     placeholder: '请选择供应商',
@@ -239,7 +308,7 @@ export default {
                 },
                 {
                     label: '开始日期',
-                    prop: 'keyWord',
+                    prop: 'startTime',
                     element: 'el-date-picker',
                     initValue: undefined,
                     placeholder: '选择开始日期',
@@ -248,7 +317,7 @@ export default {
                 },
                 {
                     label: '结束日期',
-                    prop: 'keyWord',
+                    prop: 'endTime',
                     element: 'el-date-picker',
                     initValue: undefined,
                     placeholder: '选择结束日期',
@@ -257,40 +326,40 @@ export default {
                 },
                 {
                     label: '单据状态',
-                    prop: 'keyWord',
+                    prop: 'status',
                     element: 'el-radio-group',
-                    initValue: 3,
+                    initValue: '3',
                     radios: [
                         {
-                            value: 1,
+                            value: '1',
                             label: '待审核'
                         },
                         {
-                            value: 2,
+                            value: '2',
                             label: '已审核'
                         },
                         {
-                            value: 3,
+                            value: '3',
                             label: '全部'
                         }
                     ]
                 },
                 {
                     label: '入库方式',
-                    prop: 'keyWord',
+                    prop: 'mode',
                     element: 'el-radio-group',
-                    initValue: 3,
+                    initValue: '3',
                     radios: [
                         {
-                            value: 1,
+                            value: '1',
                             label: '采购入库'
                         },
                         {
-                            value: 2,
+                            value: '2',
                             label: '快速入库'
                         },
                         {
-                            value: 3,
+                            value: '3',
                             label: '全部'
                         }
                     ]
@@ -301,65 +370,16 @@ export default {
 
     methods: {
         /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            console.log(data, 11111);
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            console.log(data, 222222);
-        },
-        /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
-        },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
-        },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+
         }
     }
 };
