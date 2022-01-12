@@ -14,7 +14,7 @@
         </SearchForm>
         <div class="app-container__body">
             <div class="app-container__body-table">
-                <CustomTable :columns="columns" :table-data='tableData'>
+                <CustomTable :columns="columns" :table-data="tableData">
                     <div slot="header" class="app-container__table-header">
                         <el-button
                             type="primary"
@@ -60,16 +60,16 @@
             @current-change="handleCurrentChange"
         />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" label-position="left">
                 <el-form-item label="品牌编码" prop="code">
-                    <el-input placeholder="品牌编码" v-model="ruleForm.code" size="small"></el-input>
+                    <el-input v-model="ruleForm.code" placeholder="品牌编码" size="small" />
                 </el-form-item>
                 <el-form-item label="品牌名称" prop="name">
-                    <el-input placeholder="品牌名称" v-model="ruleForm.name" size="small"></el-input>
+                    <el-input v-model="ruleForm.name" placeholder="品牌名称" size="small" />
                 </el-form-item>
             </el-form>
             <template #footer>
-                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
+                <el-button type="primary" size="medium" :loading="isLoading" @click="handleSubmit">确定</el-button>
                 <el-button size="medium" @click="closeDialog">取消</el-button>
                 <el-button size="medium" @click="resetForm">重置</el-button>
             </template>
@@ -84,13 +84,13 @@ import CustomDialog from '@/components/customDialog/customDialog';
 import tableMixin from '@/mixin/table';
 
 export default {
-    name: 'brand',
-    mixins: [tableMixin],
+    name: 'Brand',
     components: {
         SearchForm,
         CustomTable,
         CustomDialog
     },
+    mixins: [tableMixin],
     data() {
         return {
             columns: [
@@ -128,7 +128,59 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'mini',
+                                    icon: 'el-icon-edit'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑品牌';
+                                        this.isShowDialog = true;
+                                    }
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                props: {
+                                    type: 'danger',
+                                    size: 'mini',
+                                    icon: 'el-icon-delete'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
