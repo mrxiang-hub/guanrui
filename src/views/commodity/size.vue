@@ -61,12 +61,12 @@
             @current-change="handleCurrentChange"
         />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" label-position="left">
                 <el-form-item label="尺寸编码" prop="code">
-                    <el-input placeholder="请输入尺寸编码" v-model="ruleForm.code" size="small"></el-input>
+                    <el-input v-model="ruleForm.code" placeholder="请输入尺寸编码" size="small" />
                 </el-form-item>
                 <el-form-item label="尺寸名称" prop="name">
-                    <el-input placeholder="请输入尺寸名称" v-model="ruleForm.name" size="small"></el-input>
+                    <el-input v-model="ruleForm.name" placeholder="请输入尺寸名称" size="small" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -85,13 +85,13 @@ import CustomDialog from '@/components/customDialog/customDialog';
 import TableMixin from '@/mixin/table';
 
 export default {
-    name: 'size',
-    mixins: [TableMixin],
+    name: 'Size',
     components: {
         SearchForm,
         CustomTable,
         CustomDialog
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -131,7 +131,59 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'primary',
+                                    icon: 'el-icon-edit'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑尺码';
+                                        this.isShowDialog = true;
+                                    }
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'danger',
+                                    icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -247,6 +299,7 @@ export default {
          * 新增
          */
         handleAdd() {
+            this.dialogTitle = '新增尺码';
             this.isShowDialog = true;
         },
         /**
@@ -254,35 +307,6 @@ export default {
          */
         handleUpload() {
 
-        },
-        /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            this.isShowDialog = true;
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            this.$confirm('确定要删除吗?', '删除', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
         },
         /**
          * 分页控制每页多少条
