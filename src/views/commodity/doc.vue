@@ -275,7 +275,59 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'mini',
+                                    icon: 'el-icon-edit'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑商品';
+                                        this.isShowDialog = true;
+                                    }
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                props: {
+                                    type: 'danger',
+                                    size: 'mini',
+                                    icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -424,41 +476,11 @@ export default {
 
         },
         /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            this.dialogTitle = '编辑商品';
-            this.isShowDialog = true;
-        },
-        /**
          * 新增
          */
         handleAdd() {
             this.dialogTitle = '新增商品';
             this.isShowDialog = true;
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            this.$confirm('确定要删除吗?', '删除', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
         },
         /**
          * 分页控制每页多少条
