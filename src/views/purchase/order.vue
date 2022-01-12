@@ -33,21 +33,6 @@
                                 >列设置
                                 </el-button>
                             </div>
-                            <template slot="handle" slot-scope="slotProps">
-                                <el-button
-                                    icon="el-icon-search"
-                                    class="handle-table-btn"
-                                    @click="handleView(slotProps.row)"
-                                >查看
-                                </el-button>
-                                <el-button
-                                    icon="el-icon-delete-solid"
-                                    class="handle-table-btn"
-                                    type="danger"
-                                    @click="handleDelete(slotProps.row)"
-                                >删除
-                                </el-button>
-                            </template>
                         </CustomTable>
                     </div>
                 </div>
@@ -106,7 +91,22 @@ export default {
                     label: '采购单号',
                     width: '',
                     sortable: true,
-                    primary: true
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            },
+                            attrs: {
+                                title: params.row.code
+                            },
+                            on: {
+                                click: () => {
+
+                                }
+                            }
+                        }, params.row.code);
+                    }
                 },
                 {
                     prop: 'name',
@@ -134,7 +134,57 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    icon: 'el-icon-search',
+                                    size: 'mini'
+                                },
+                                style: {
+                                    padding: '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+
+                                    }
+                                }
+                            }, '查看'),
+                            h('el-button', {
+                                props: {
+                                    icon: 'el-icon-delete',
+                                    size: 'mini',
+                                    type: 'danger'
+                                },
+                                style: {
+                                    padding: '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             dialogColumns: [
@@ -337,28 +387,6 @@ export default {
         handleView(data) {
             this.isShowAddPopup = false;
             this.isShowViewPopup = true;
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            this.$confirm('确定要删除吗?', '删除', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
         },
         /**
          * 分页控制每页多少条

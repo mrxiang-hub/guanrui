@@ -135,6 +135,9 @@ export default {
                                 color: '#00a2ff',
                                 cursor: 'pointer'
                             },
+                            attrs: {
+                                title: params.row.mobile
+                            },
                             on: {
                                 click: () => {
 
