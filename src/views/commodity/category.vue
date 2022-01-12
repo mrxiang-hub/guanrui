@@ -65,19 +65,19 @@
             @current-change="handleCurrentChange"
         />
         <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" label-position="left">
                 <el-form-item label="父类名称" prop="parentTypeName">
-                    <el-input placeholder="父类名称" size="small" v-model="ruleForm.parentTypeName"></el-input>
+                    <el-input v-model="ruleForm.parentTypeName" placeholder="父类名称" size="small" />
                 </el-form-item>
                 <el-form-item label="分类编码" prop="typeCode">
-                    <el-input placeholder="分类编码" size="small" v-model="ruleForm.typeCode"></el-input>
+                    <el-input v-model="ruleForm.typeCode" placeholder="分类编码" size="small" />
                 </el-form-item>
                 <el-form-item label="分类名称" prop="typeName">
-                    <el-input placeholder="分类名称" size="small" v-model="ruleForm.typeName"></el-input>
+                    <el-input v-model="ruleForm.typeName" placeholder="分类名称" size="small" />
                 </el-form-item>
             </el-form>
             <template #footer>
-                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
+                <el-button type="primary" size="medium" :loading="isLoading" @click="handleSubmit">确定</el-button>
                 <el-button size="medium" @click="closeDialog">取消</el-button>
                 <el-button size="medium" @click="resetForm">重置</el-button>
             </template>
@@ -92,13 +92,13 @@ import CustomDialog from '@/components/customDialog/customDialog';
 import TableMixin from '@/mixin/table';
 
 export default {
-    name: 'category',
-    mixins: [TableMixin],
+    name: 'Category',
     components: {
         SearchForm,
         CustomTable,
         CustomDialog
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -126,7 +126,59 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    type: 'primary',
+                                    icon: 'el-icon-edit',
+                                    size: 'mini'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑分类';
+                                        this.isShowDialog = true;
+                                    }
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                props: {
+                                    type: 'danger',
+                                    icon: 'el-icon-delete',
+                                    size: 'mini'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -267,36 +319,6 @@ export default {
     },
 
     methods: {
-        /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            this.dialogTitle = '编辑分类';
-            this.isShowDialog = true;
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            this.$confirm('确定要删除吗?', '删除', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
-        },
         /**
          * 搜索
          */
