@@ -15,22 +15,6 @@
         <div class="app-container__body">
             <div class="app-container__body-table">
                 <CustomTable :columns="columns" :table-data="tableData">
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-search"
-                            class="handle-table-btn"
-                            type="default"
-                            @click="handleEdit(slotProps.row)"
-                        >查看
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -143,7 +127,21 @@ export default {
                 {
                     prop: 'mobile',
                     label: '单据编号',
-                    width: ''
+                    width: '',
+                    render: (h, params) => {
+                        console.log(params);
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            },
+                            on: {
+                                click: () => {
+
+                                }
+                            }
+                        }, params.row.mobile);
+                    }
                 }
             ],
             tableData: [
