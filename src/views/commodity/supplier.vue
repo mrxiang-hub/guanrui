@@ -190,6 +190,10 @@ export default {
                                     size: 'mini',
                                     type: 'primary',
                                     icon: 'el-icon-edit'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
                                 }
                             }, '编辑'),
                             h('el-button', {
@@ -217,6 +221,10 @@ export default {
                                     size: 'mini',
                                     type: 'danger',
                                     icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
                                 }
                             }, '删除')
                         ]);

@@ -1,6 +1,6 @@
 <template>
     <div class="c-custom-table">
-        <slot name="header" />
+        <slot name="header"/>
         <el-table
             ref="multipleTable"
             class="c-custom-table__body"
@@ -25,13 +25,6 @@
                 :fixed="item.fixed"
             >
                 <template slot-scope="scope">
-                    <!--                    <slot-->
-                    <!--                        v-if="item.prop === 'handle'"-->
-                    <!--                        name="handle"-->
-                    <!--                        :row="scope.row"-->
-                    <!--                        :column="scope.column"-->
-                    <!--                        :$index="scope.$index"-->
-                    <!--                    />-->
                     <ex-slot
                         v-if="item.render"
                         :render="item.render"
@@ -41,12 +34,8 @@
                     />
                     <span
                         v-else
-                        :class="{'c-custom-table__primary-val': item.primary}"
                         :title="scope.row[item.prop]"
                         class="c-custom-table__val"
-                        :row="scope.row"
-                        :column="scope.column"
-                        @click="clickText(scope.row)"
                     >{{ scope.row[item.prop] }}</span>
                 </template>
             </el-table-column>
@@ -55,32 +44,31 @@
 </template>
 
 <script>
-const exSlot = {
-    functional: true,
-    props: {
-        row: {
-            type: Object,
-            default: {}
-        },
-        index: Number,
-        column: {
-            type: Object,
-            default: {}
-        },
-        render: Function
-    },
-    render: (h, data) => {
-        const params = {
-            row: data.props.row,
-            index: data.props.index,
-            column: data.props.column
-        };
-        return data.props.render(h, params);
-    }
-};
 export default {
     components: {
-        'ex-slot': exSlot
+        'ex-slot': {
+            functional: true,
+            props: {
+                row: {
+                    type: Object,
+                    default: {}
+                },
+                index: Number,
+                column: {
+                    type: Object,
+                    default: {}
+                },
+                render: Function
+            },
+            render: (h, data) => {
+                const params = {
+                    row: data.props.row,
+                    index: data.props.index,
+                    column: data.props.column
+                };
+                return data.props.render(h, params);
+            }
+        }
     },
     props: {
         columns: {
@@ -114,13 +102,6 @@ export default {
          */
         handleSelectionChange() {
 
-        },
-        /**
-         * 点击表格中的蓝色文字
-         * @param data
-         */
-        clickText(data) {
-            this.$emit('clickText', data);
         }
     }
 };
@@ -142,10 +123,6 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
-    &__primary-val {
-        color: #20a0ff;
-        cursor: pointer;
     }
 }
 </style>
