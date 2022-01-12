@@ -35,22 +35,6 @@
                         >新增
                         </el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-edit"
-                            class="handle-table-btn"
-                            type="primary"
-                            @click="handleEdit(slotProps.row)"
-                        >编辑
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
