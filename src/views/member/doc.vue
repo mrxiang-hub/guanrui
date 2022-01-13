@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button size="mini">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -19,27 +20,10 @@
                             type="primary"
                             icon="el-icon-plus"
                             size="mini"
+                            @click="handleAdd"
                         >新增会员
                         </el-button>
                     </div>
-                    <template #handle="slotProps">
-                        <el-button
-                            class="handle-table-btn"
-                            type="primary"
-                            icon="el-icon-edit"
-                            size="mini"
-                            @click="handleEidt(slotProps.row)"
-                        >编辑
-                        </el-button>
-                        <el-button
-                            class="handle-table-btn"
-                            type="danger"
-                            icon="el-icon-delete"
-                            size="mini"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -53,19 +37,72 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
+        <CustomDialog :title="dialogTitle" :show="isShowDialog" @close="closeDialog">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-position="left" label-width="100px" inline>
+                <el-form-item label="会员姓名" prop="name">
+                    <el-input v-model="ruleForm.name" placeholder="会员姓名" size="small" clearable />
+                </el-form-item>
+                <el-form-item label="会员等级" prop="level">
+                    <el-select v-model="ruleForm.level" prop="level" size="small" clearable placeholder="请选择会员等级">
+                        <el-option label="黄金会员" value="1" />
+                        <el-option label="白银会员" value="2" />
+                        <el-option label="青铜会员" value="3" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="联系电话" prop="phone">
+                    <el-input v-model="ruleForm.phone" placeholder="联系电话" size="small" clearable />
+                </el-form-item>
+                <el-form-item label="会员状态" prop="level">
+                    <el-select v-model="ruleForm.status" prop="status" size="small" clearable placeholder="请选择会员状态">
+                        <el-option label="正常" value="1" />
+                        <el-option label="锁定" value="2" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="卡密码" prop="pwd">
+                    <el-input v-model="ruleForm.pwd" placeholder="会员卡密码" size="small" clearable />
+                </el-form-item>
+                <el-form-item label="会员积分" prop="integral">
+                    <el-input v-model="ruleForm.integral" placeholder="当前积分" size="small" clearable />
+                </el-form-item>
+                <el-form-item label="卡余额" prop="balance">
+                    <el-input v-model="ruleForm.balance" placeholder="当前余额" size="small" clearable />
+                </el-form-item>
+                <el-form-item label="会员生日" prop="birthday">
+                    <el-date-picker v-model="ruleForm.birthday" placeholder="选择生日" size="small" clearable />
+                </el-form-item>
+                <el-form-item label="性别" prop="gender">
+                    <el-select v-model="ruleForm.gender" prop="status" size="small" clearable placeholder="请选择性别">
+                        <el-option label="男" value="1" />
+                        <el-option label="女" value="2" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="备注" prop="remark">
+                    <el-input v-model="ruleForm.remark" placeholder="备注" size="small" clearable />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button type="primary" size="medium" @click="handleSubmit" :loading="isLoading">确定</el-button>
+                <el-button size="medium" @click="closeDialog">取消</el-button>
+                <el-button size="medium" @click="resetForm">重置</el-button>
+            </template>
+        </CustomDialog>
     </div>
 </template>
 
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import CustomDialog from '@/components/customDialog/customDialog';
+import TableMixin from '@/mixin/table';
 
 export default {
-    name: 'doc',
+    name: 'Doc',
     components: {
         SearchForm,
-        CustomTable
+        CustomTable,
+        CustomDialog
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -154,7 +191,59 @@ export default {
                     prop: 'handle',
                     label: '操作',
                     width: 180,
-                    fixed: 'right'
+                    fixed: 'right',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'primary',
+                                    icon: 'el-icon-edit'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.dialogTitle = '编辑会员';
+                                        this.isShowDialog = true;
+                                    }
+                                }
+                            }, '编辑'),
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'danger',
+                                    icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -263,7 +352,7 @@ export default {
                 },
                 {
                     label: '会员等级',
-                    prop: 'store',
+                    prop: 'level',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '请选择会员等级',
@@ -279,75 +368,116 @@ export default {
                         },
                         {
                             label: '白银会员',
-                            value: '2'
+                            value: '3'
                         }
                     ]
                 }
-            ]
+            ],
+            dialogTitle: '新增会员',
+            isShowDialog: false,
+            ruleForm: {
+                name: '',
+                level: '',
+                phone: '',
+                status: '',
+                pwd: '',
+                integral: '',
+                balance: '',
+                birthday: '',
+                gender: '',
+                remark: ''
+            },
+            rules: {
+                name: [
+                    { required: true, message: '请输入会员姓名', trigger: 'change' }
+                ],
+                level: [
+                    { required: true, message: '请选择会员等级', trigger: 'change' }
+                ],
+                phone: [
+                    { required: true, message: '请输入会员手机号', trigger: 'change' }
+                ],
+                status: [
+                    { required: true, message: '请选择会员状态', trigger: 'change' }
+                ],
+                pwd: [
+                    { required: true, message: '请输入会员卡密码', trigger: 'change' }
+                ],
+                integral: [
+                    { required: true, message: '请输入会员卡积分', trigger: 'change' }
+                ],
+                balance: [
+                    { required: true, message: '请输入会员余额', trigger: 'change' }
+                ],
+                birthday: [
+                    { required: true, message: '请选择会员生日', trigger: 'change' }
+                ],
+                gender: [
+                    { required: true, message: '请选择性别', trigger: 'change' }
+                ],
+                remark: [
+                    { required: true, message: '请输入备注', trigger: 'change' }
+                ]
+            },
+            isLoading: false
         };
     },
 
     methods: {
         /**
-         * 编辑
-         * @param data
+         * 搜索
          */
-        handleEdit(data) {
-            console.log(data, 11111);
+        handleSearch() {
+
         },
         /**
-         * 删除
-         * @param data
+         * 新增会员
          */
-        handleDelete(data) {
-            console.log(data, 222222);
+        handleAdd() {
+            this.dialogTitle = '新增会员';
+            this.isShowDialog = true;
+        },
+        /**
+         * 关闭弹窗
+         */
+        closeDialog() {
+            this.isShowDialog = false;
+            this.resetForm();
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
+
         },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
+        /**
+         * 提交表单
+         */
+        handleSubmit() {
+            this.$refs['ruleForm'].validate((validator) => {
+                if (validator) {
+                    this.isLoading = true;
+                    setTimeout(() => {
+                        this.isLoading = false;
+                        this.closeDialog();
+                    }, 1000);
                 } else {
                     return false;
                 }
             });
         },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+        /**
+         * 重置表单
+         */
+        resetForm() {
+            this.ruleForm = Object.assign(this.ruleForm, this.$options.data().ruleForm);
+            this.$refs['ruleForm'].resetFields();
         }
     }
 };
