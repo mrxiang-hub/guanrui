@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
@@ -8,7 +8,7 @@
                     size="mini"
                 >查询
                 </el-button>
-                <el-button size="mini">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -32,9 +32,11 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'Reconciliation',
+    mixins: [TableMixin],
     components: {
         SearchForm,
         CustomTable
@@ -193,7 +195,7 @@ export default {
                 },
                 {
                     label: '选择会员',
-                    prop: 'keyWords',
+                    prop: 'member',
                     element: 'el-input',
                     initValue: undefined,
                     placeholder: '请选择会员',
@@ -223,20 +225,6 @@ export default {
 
     methods: {
         /**
-         * 编辑
-         * @param data
-         */
-        handleEdit(data) {
-            console.log(data, 11111);
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            console.log(data, 222222);
-        },
-        /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
@@ -247,41 +235,6 @@ export default {
          */
         handleCurrentChange() {
             console.log(2222);
-        },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
-        },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
         }
     }
 };
