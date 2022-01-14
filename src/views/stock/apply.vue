@@ -6,9 +6,10 @@
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -18,14 +19,6 @@
                         <el-button type="primary" size="mini" icon="el-icon-plus">新增</el-button>
                         <el-button type="primary" size="mini" icon="el-icon-s-tools">列设置</el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            class="handle-table-btn"
-                            icon="el-icon-search"
-                            @click="handleEdit(slotProps.row)"
-                        >查看
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -45,9 +38,11 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'apply',
+    mixins: [TableMixin],
     components: {
         SearchForm,
         CustomTable
@@ -101,7 +96,24 @@ export default {
                 },
                 {
                     prop: 'handle',
-                    label: '操作'
+                    label: '操作',
+                    render: (h, params) => {
+                        return h('el-button', {
+                            props: {
+                                size: 'mini',
+                                icon: 'el-icon-search'
+                            },
+                            style: {
+                                'padding': '5px',
+                                'font-size': '12px'
+                            },
+                            on: {
+                                click: () => {
+                                    console.log(params);
+                                }
+                            }
+                        }, '查看');
+                    }
                 }
             ],
             tableData: [
@@ -200,7 +212,7 @@ export default {
                 },
                 {
                     label: '结束日期',
-                    prop: 'startTime',
+                    prop: 'endTime',
                     element: 'el-date-picker',
                     placeholder: '请选择结束日期',
                     type: 'date',
@@ -208,7 +220,7 @@ export default {
                 },
                 {
                     label: '门店',
-                    prop: 'keyWord',
+                    prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '门店选择',
@@ -216,17 +228,17 @@ export default {
                     options: [
                         {
                             label: '管锐技术测试总部',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '管锐技术测试分店',
-                            value: 2
+                            value: '2'
                         }
                     ]
                 },
                 {
                     label: '状态',
-                    prop: 'keyWord',
+                    prop: 'status',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '状态选择',
@@ -234,19 +246,19 @@ export default {
                     options: [
                         {
                             label: '待审核',
-                            vlaue: 1
+                            value: '1'
                         },
                         {
                             label: '已审核',
-                            vlaue: 2
+                            value: '2'
                         },
                         {
                             label: '已出库',
-                            vlaue: 3
+                            value: '3'
                         },
                         {
                             label: '已入库',
-                            vlaue: 4
+                            value: '4'
                         }
                     ]
                 }
@@ -255,65 +267,36 @@ export default {
     },
     methods: {
         /**
+         * 搜索
+         */
+        handleSearch() {
+
+        },
+        /**
          * 编辑
          * @param data
          */
         handleEdit(data) {
-            console.log(data, 11111);
+
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
-        },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
-        },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+
         }
     }
 };

@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button size="mini">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -28,22 +29,6 @@
                         >列设置
                         </el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-edit"
-                            class="handle-table-btn"
-                            type="primary"
-                            @click="handleEdit(slotProps.row)"
-                        >编辑
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -63,9 +48,11 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'outPut',
+    mixins: [TableMixin],
     components: {
         SearchForm,
         CustomTable
@@ -137,7 +124,26 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    icon: 'el-icon-search'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+
+                                    }
+                                }
+                            }, '查看')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -236,11 +242,11 @@ export default {
                     options: [
                         {
                             label: '管锐技术测试总部',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '管锐技术测试分店',
-                            value: 2
+                            value: '2'
                         }
                     ]
                 },
@@ -266,19 +272,19 @@ export default {
                     label: '单据状态',
                     prop: 'status',
                     element: 'el-radio-group',
-                    initValue: 3,
+                    initValue: '3',
                     radios: [
                         {
                             label: '待审核',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '已审核',
-                            value: 2
+                            value: '2'
                         },
                         {
                             label: '全部',
-                            value: 3
+                            value: '3'
                         }
                     ]
                 }
@@ -288,65 +294,22 @@ export default {
 
     methods: {
         /**
-         * 编辑
-         * @param data
+         * 搜索
          */
-        handleEdit(data) {
-            console.log(data, 11111);
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            console.log(data, 222222);
+        handleSearch() {
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
-        },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
-        },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+
         }
     }
 };
