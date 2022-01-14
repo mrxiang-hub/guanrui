@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button size="mini">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -22,28 +23,6 @@
                         >新增
                         </el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-search"
-                            class="handle-table-btn"
-                            @click="handleEdit(slotProps.row)"
-                        >查看
-                        </el-button>
-                        <el-button
-                            icon="el-icon-search"
-                            class="handle-table-btn"
-                            type="warning"
-                            @click="handleEdit(slotProps.row)"
-                        >实盘
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -63,13 +42,15 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
-    name: 'outPut',
+    name: 'OutPut',
     components: {
         SearchForm,
         CustomTable
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -115,7 +96,72 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 220
+                    width: 220,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    icon: 'el-icon-search'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+
+                                    }
+                                }
+                            }, '查看'),
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'warning'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+
+                                    }
+                                }
+                            }, '实盘'),
+                            h('el-button', {
+                                props: {
+                                    size: 'mini',
+                                    type: 'danger',
+                                    icon: 'el-icon-delete'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -272,65 +318,36 @@ export default {
 
     methods: {
         /**
+         * 查询
+         */
+        handleSearch() {
+
+        },
+        /**
          * 编辑
          * @param data
          */
         handleEdit(data) {
-            console.log(data, 11111);
+
         },
         /**
          * 删除
          * @param data
          */
         handleDelete(data) {
-            console.log(data, 222222);
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
-        },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
-        },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+
         }
     }
 };
