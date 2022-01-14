@@ -58,7 +58,15 @@ export default {
                     prop: 'code',
                     label: '盘点单单号',
                     width: 180,
-                    sortable: true
+                    sortable: true,
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            }
+                        }, params.row.code);
+                    }
                 },
                 {
                     prop: 'name',
@@ -91,7 +99,15 @@ export default {
                     prop: 'mobile',
                     label: '状态',
                     width: '',
-                    sortable: true
+                    sortable: true,
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#F56C6C',
+                                cursor: 'pointer'
+                            }
+                        }, params.row.code);
+                    }
                 },
                 {
                     prop: 'handle',
