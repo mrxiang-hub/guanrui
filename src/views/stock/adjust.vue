@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button size="mini">重置</el-button>
+                <el-button size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -28,21 +29,6 @@
                         >列设置
                         </el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            icon="el-icon-search"
-                            class="handle-table-btn"
-                            @click="handleEdit(slotProps.row)"
-                        >查看
-                        </el-button>
-                        <el-button
-                            icon="el-icon-delete-solid"
-                            class="handle-table-btn"
-                            type="danger"
-                            @click="handleDelete(slotProps.row)"
-                        >删除
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -62,6 +48,7 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'InventoryAdjustmentOrder',
@@ -69,6 +56,7 @@ export default {
         SearchForm,
         CustomTable
     },
+    mixins: [TableMixin],
     data() {
         return {
             columns: [
@@ -76,7 +64,15 @@ export default {
                     prop: 'code',
                     label: '调整单单号',
                     width: '',
-                    sortable: true
+                    sortable: true,
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            }
+                        }, params.row.code);
+                    }
                 },
                 {
                     prop: 'name',
@@ -91,7 +87,15 @@ export default {
                 {
                     prop: 'mobile',
                     label: '单据状态',
-                    width: ''
+                    width: '',
+                    render: (h, params) => {
+                        return h('span', {
+                            style: {
+                                color: '#00a2ff',
+                                cursor: 'pointer'
+                            }
+                        }, params.row.mobile);
+                    }
                 },
                 {
                     prop: 'mobile',
@@ -136,7 +140,57 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180
+                    width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('el-button', {
+                                props: {
+                                    icon: 'el-icon-search',
+                                    size: 'mini'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+
+                                    }
+                                }
+                            }, '查看'),
+                            h('el-button', {
+                                props: {
+                                    icon: 'el-icon-delete',
+                                    size: 'mini',
+                                    type: 'danger'
+                                },
+                                style: {
+                                    'padding': '5px',
+                                    'font-size': '12px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$confirm('确定要删除吗?', '删除', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning',
+                                            center: true
+                                        }).then(() => {
+                                            this.$message({
+                                                type: 'success',
+                                                message: '删除成功!'
+                                            });
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
                 }
             ],
             tableData: [
@@ -284,65 +338,22 @@ export default {
 
     methods: {
         /**
-         * 编辑
-         * @param data
+         * 搜索
          */
-        handleEdit(data) {
-            console.log(data, 11111);
-        },
-        /**
-         * 删除
-         * @param data
-         */
-        handleDelete(data) {
-            console.log(data, 222222);
+        handleSearch() {
+
         },
         /**
          * 分页控制每页多少条
          */
         handleSizeChange() {
-            console.log(11111);
+
         },
         /**
          * 分页控制第几页
          */
         handleCurrentChange() {
-            console.log(2222);
-        },
-        // 校验
-        onValidate(callback) {
-            this.$refs.formRef.validate((valid) => {
-                if (valid) {
-                    callback();
-                } else {
-                    return false;
-                }
-            });
-        },
-        // 搜索
-        onSearch() {
-            this.onValidate(() => {
-                this.$emit('onSearch', this.formData);
-            });
-        },
-        // 导出
-        onExport() {
-            this.onValidate(() => {
-                this.$emit('onExport', this.formData);
-            });
-        },
-        onReset() {
-            this.$refs.formRef.resetFields();
-        },
-        // 添加初始值
-        addInitValue() {
-            const obj = {};
-            this.formOptions.forEach((curr) => {
-                if (curr.initValue !== undefined) {
-                    obj[curr.prop] = curr.initValue;
-                }
-            });
-            this.formData = obj;
+
         }
     }
 };
