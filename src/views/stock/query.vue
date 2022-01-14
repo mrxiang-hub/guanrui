@@ -20,14 +20,6 @@
                         <el-button type="primary" size="mini" icon="el-icon-s-tools">列设置</el-button>
                         <el-button type="primary" size="mini" icon="el-icon-upload2">导出</el-button>
                     </div>
-                    <template slot="handle" slot-scope="slotProps">
-                        <el-button
-                            class="handle-table-btn"
-                            type="primary"
-                            @click="handleEdit(slotProps.row)"
-                        >绑定
-                        </el-button>
-                    </template>
                 </CustomTable>
             </div>
         </div>
@@ -166,8 +158,25 @@ export default {
                 {
                     prop: 'handle',
                     label: '操作',
-                    width: 180,
-                    fixed: 'right'
+                    width: 100,
+                    fixed: 'right',
+                    render: (h, params) => {
+                        return h('el-button', {
+                            props: {
+                                type: 'primary',
+                                size: 'mini'
+                            },
+                            style: {
+                                'padding': '5px',
+                                'font-size': '12px'
+                            },
+                            on: {
+                                click: () => {
+                                    console.log(params);
+                                }
+                            }
+                        }, '绑定');
+                    }
                 }
             ],
             tableData: [
