@@ -1,14 +1,15 @@
 <template>
     <div class="app-container">
-        <SearchForm :form-options="formOptions">
+        <SearchForm ref="searchForm" :form-options="formOptions">
             <template #handleBtn>
                 <el-button
                     type="primary"
                     icon="el-icon-search"
                     size="mini"
+                    @click="handleSearch"
                 >查询
                 </el-button>
-                <el-button type="default" size="mini">重置</el-button>
+                <el-button type="default" size="mini" @click="handleReset">重置</el-button>
             </template>
         </SearchForm>
         <div class="app-container__body">
@@ -48,9 +49,11 @@
 <script>
 import CustomTable from '@/components/customTable';
 import SearchForm from '@/components/seachForm';
+import TableMixin from '@/mixin/table';
 
 export default {
     name: 'warehouse',
+    mixins: [TableMixin],
     components: {
         SearchForm,
         CustomTable
@@ -257,7 +260,7 @@ export default {
                 },
                 {
                     label: '门店',
-                    prop: 'keyWord',
+                    prop: 'store',
                     element: 'el-select',
                     initValue: undefined,
                     placeholder: '门店选择',
@@ -265,17 +268,17 @@ export default {
                     options: [
                         {
                             label: '管锐技术测试总部',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '管锐技术测试分店',
-                            value: 2
+                            value: '2'
                         }
                     ]
                 },
                 {
                     label: '供应商',
-                    prop: 'keyWord',
+                    prop: 'supplier',
                     element: 'el-input',
                     initValue: undefined,
                     placeholder: '请选择供应商',
@@ -283,7 +286,7 @@ export default {
                 },
                 {
                     label: '商品类别',
-                    prop: 'keyWord',
+                    prop: 'category',
                     element: 'el-input',
                     initValue: undefined,
                     placeholder: '请选择商品类别',
@@ -291,7 +294,7 @@ export default {
                 },
                 {
                     label: '开始日期',
-                    prop: 'keyWord',
+                    prop: 'startTime',
                     element: 'el-date-picker',
                     initValue: undefined,
                     placeholder: '选择开始日期',
@@ -300,7 +303,7 @@ export default {
                 },
                 {
                     label: '结束日期',
-                    prop: 'keyWord',
+                    prop: 'endTime',
                     element: 'el-date-picker',
                     initValue: undefined,
                     placeholder: '选择结束日期',
@@ -309,54 +312,54 @@ export default {
                 },
                 {
                     label: '单据类型',
-                    prop: 'status',
+                    prop: 'type',
                     element: 'el-select',
-                    initValue: 1,
+                    initValue: '1',
                     placeholder: '请选择单据类型',
                     options: [
                         {
                             label: '全部',
-                            value: 1
+                            value: '1'
                         },
                         {
                             label: '采购入库',
-                            value: 2
+                            value: '2'
                         },
                         {
                             label: '退货出库',
-                            value: 3
+                            value: '3'
                         },
                         {
                             label: '快速入库',
-                            value: 4
+                            value: '4'
                         },
                         {
                             label: '快速出库',
-                            value: 5
+                            value: '5'
                         },
                         {
                             label: '调拨入库',
-                            value: 6
+                            value: '6'
                         },
                         {
                             label: '调拨出库',
-                            value: 7
+                            value: '7'
                         },
                         {
                             label: '调整出库',
-                            value: 8
+                            value: '8'
                         },
                         {
                             label: '调整入库',
-                            value: 9
+                            value: '9'
                         },
                         {
                             label: 'pos销售',
-                            value: 10
+                            value: '10'
                         },
                         {
                             label: '销售退货',
-                            value: 11
+                            value: '11'
                         }
                     ]
                 }
@@ -364,6 +367,12 @@ export default {
         };
     },
     methods: {
+        /**
+         * 搜索
+         */
+        handleSearch() {
+
+        },
         /**
          * 编辑
          * @param data
